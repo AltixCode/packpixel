@@ -8,9 +8,15 @@
     "scheme": "packpixel",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#050811"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hushtunnel.packpixel",
+      "buildNumber": "1",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "PackPixel needs photo library access to batch select product photos.",
         "NSPhotoLibraryAddUsageDescription": "PackPixel exports formatted, resized marketplace images to your photo library."
@@ -18,8 +24,9 @@
     },
     "android": {
       "package": "com.hushtunnel.packpixel",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#0F172A",
+        "backgroundColor": "#050811",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
