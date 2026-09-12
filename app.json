@@ -1,17 +1,25 @@
 {
   "expo": {
-    "name": "packpixel",
+    "name": "PackPixel",
     "slug": "packpixel",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "scheme": "packpixel",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hushtunnel.packpixel",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "PackPixel needs photo library access to batch select product photos.",
+        "NSPhotoLibraryAddUsageDescription": "PackPixel exports formatted, resized marketplace images to your photo library."
+      }
     },
     "android": {
+      "package": "com.hushtunnel.packpixel",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0F172A",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -20,6 +28,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
