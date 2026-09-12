@@ -14,6 +14,7 @@ import {
 } from 'lucide-react-native';
 import { useImageStore } from '../src/store/useImageStore';
 import { processBatchImages, saveResultsToLibrary } from '../src/engine/skiaProcessor';
+import { t } from '../src/i18n';
 
 export default function ProcessingScreen() {
   const router = useRouter();
@@ -69,7 +70,7 @@ export default function ProcessingScreen() {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } catch (err: any) {
         if (!isMounted || isCanceledRef.current) return;
-        setErrorMessage(err?.message || 'Batch image formatting failed.');
+        setErrorMessage(err?.message || t('batchError'));
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
     };
@@ -107,18 +108,24 @@ export default function ProcessingScreen() {
             <CheckCircle2 size={56} color="#34D399" />
           </View>
           <Text className="text-2xl font-extrabold text-white text-center mb-2">
-            Batch Export Complete!
+            {t('allPhotosSaved')}
           </Text>
           <Text className="text-slate-400 text-sm text-center max-w-xs leading-relaxed mb-6">
-            {images.length} photos conformed to {selectedPreset.platform} ({selectedPreset.width}×
-            {selectedPreset.height}) with EXIF stripped and saved to your camera roll.
+            {t('allPhotosSavedDesc', {
+              count: images.length,
+              platform: selectedPreset.platform,
+              width: selectedPreset.width,
+              height: selectedPreset.height,
+            })}
           </Text>
 
           <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl w-full mb-6 flex-row items-center">
             <Sparkles size={20} color="#60A5FA" />
             <Text className="text-slate-300 text-xs ml-3 flex-1 font-mono">
-              SKU sequence: {skuPrefix}_01.jpg through {skuPrefix}_
-              {String(images.length).padStart(2, '0')}.jpg
+              {t('skuSequence', {
+                prefix: skuPrefix,
+                last: String(images.length).padStart(2, '0'),
+              })}
             </Text>
           </View>
 
@@ -130,7 +137,7 @@ export default function ProcessingScreen() {
                 className="w-full bg-slate-800 py-3.5 rounded-2xl flex-row items-center justify-center mb-3"
               >
                 <Share2 size={18} color="#FFFFFF" />
-                <Text className="text-white font-semibold text-sm ml-2">Share Sample File</Text>
+                <Text className="text-white font-semibold text-sm ml-2">{t('shareSample')}</Text>
               </TouchableOpacity>
             )}
 
@@ -140,7 +147,7 @@ export default function ProcessingScreen() {
               className="w-full bg-blue-600 active:bg-blue-500 py-4 rounded-2xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
             >
               <RotateCcw size={18} color="#FFFFFF" />
-              <Text className="text-white font-bold text-base ml-2">Prep Another Batch</Text>
+              <Text className="text-white font-bold text-base ml-2">{t('prepAnother')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -151,7 +158,7 @@ export default function ProcessingScreen() {
             <XCircle size={56} color="#F43F5E" />
           </View>
           <Text className="text-2xl font-extrabold text-white text-center mb-2">
-            Batch Processing Error
+            {t('batchError')}
           </Text>
           <Text className="text-rose-300 text-xs text-center max-w-xs mb-8">{errorMessage}</Text>
 
@@ -160,7 +167,7 @@ export default function ProcessingScreen() {
             className="bg-slate-800 py-3.5 px-6 rounded-xl flex-row items-center justify-center"
           >
             <ArrowLeft size={16} color="#FFFFFF" />
-            <Text className="text-white font-semibold text-sm ml-2">Back to Settings</Text>
+            <Text className="text-white font-semibold text-sm ml-2">{t('backToSettings')}</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -171,11 +178,14 @@ export default function ProcessingScreen() {
           </View>
 
           <Text className="text-xl font-bold text-white text-center mb-1">
-            Formatting E-Commerce Photos
+            {t('formattingPhotos')}
           </Text>
           <Text className="text-slate-400 text-xs text-center mb-8">
-            Conforming image {currentProcessIndex || 1} of {images.length} to{' '}
-            {selectedPreset.platform}...
+            {t('conformingProgress', {
+              current: currentProcessIndex || 1,
+              total: images.length,
+              platform: selectedPreset.platform,
+            })}
           </Text>
 
           {/* Progress Bar */}
@@ -187,7 +197,7 @@ export default function ProcessingScreen() {
           </View>
 
           <View className="w-full flex-row justify-between mb-8">
-            <Text className="text-slate-500 text-xs font-mono">GPU Canvas Resizer</Text>
+            <Text className="text-slate-500 text-xs font-mono">{t('gpuEngine')}</Text>
             <Text className="text-blue-400 text-xs font-bold font-mono">{progressPercent}%</Text>
           </View>
 
@@ -200,7 +210,7 @@ export default function ProcessingScreen() {
             }}
             className="px-6 py-2.5 rounded-full bg-slate-900 border border-slate-800"
           >
-            <Text className="text-slate-400 text-xs font-semibold">Cancel Batch</Text>
+            <Text className="text-slate-400 text-xs font-semibold">{t('cancelBatch')}</Text>
           </TouchableOpacity>
         </View>
       )}

@@ -12,11 +12,11 @@ import {
   ShieldCheck,
   Plus,
   Trash2,
-  Lock,
 } from 'lucide-react-native';
 import { useImageStore, ImageAsset } from '../src/store/useImageStore';
 import { ImagePreviewCard } from '../src/components/ImagePreviewCard';
 import { PaywallModal } from '../src/components/PaywallModal';
+import { t } from '../src/i18n';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -57,7 +57,7 @@ export default function HomeScreen() {
         }
       }
     } catch {
-      Alert.alert('Selection Error', 'Failed to pick photos from photo library.');
+      Alert.alert(t('selectionError'), t('selectionErrorDesc'));
     } finally {
       setIsPicking(false);
     }
@@ -80,15 +80,14 @@ export default function HomeScreen() {
           <View className="inline-flex self-start bg-blue-500/10 border border-blue-500/30 px-3 py-1 rounded-full mb-3 flex-row items-center">
             <Sparkles size={12} color="#60A5FA" />
             <Text className="text-blue-400 text-xs font-semibold ml-1.5">
-              Marketplace Resizer & SKU Studio
+              {t('heroBadge')}
             </Text>
           </View>
           <Text className="text-3xl font-extrabold text-white tracking-tight">
-            Batch Product Photo Prep
+            {t('heroTitle')}
           </Text>
           <Text className="text-slate-400 text-sm mt-1.5 leading-relaxed">
-            Auto-pad, conform aspect ratios for Amazon, Etsy & eBay, and batch-rename SKUs
-            with zero cloud latency.
+            {t('heroSubtitle')}
           </Text>
         </View>
 
@@ -98,12 +97,12 @@ export default function HomeScreen() {
             <View className="flex-row items-center justify-between mb-4 pb-3 border-b border-slate-800">
               <View className="flex-row items-center">
                 <Text className="text-white font-bold text-base mr-2">
-                  Batch Queue ({images.length})
+                  {t('batchQueue', { count: images.length })}
                 </Text>
                 {!isPro && (
                   <View className="bg-slate-800 px-2 py-0.5 rounded-md">
                     <Text className="text-slate-400 text-[10px] font-mono">
-                      {images.length}/{FREE_LIMIT} Free
+                      {t('freeLimit', { count: images.length, limit: FREE_LIMIT })}
                     </Text>
                   </View>
                 )}
@@ -145,7 +144,7 @@ export default function HomeScreen() {
               className="mt-4 bg-blue-600 active:bg-blue-500 py-3.5 px-4 rounded-xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
             >
               <Text className="text-white font-bold text-base mr-2">
-                Configure Marketplace Preset
+                {t('configureBatch', { count: images.length })}
               </Text>
               <ArrowRight size={18} color="#FFFFFF" />
             </TouchableOpacity>
@@ -162,10 +161,10 @@ export default function HomeScreen() {
               <ShoppingBag size={36} color="#60A5FA" />
             </View>
             <Text className="text-white font-bold text-lg text-center mb-1">
-              Select Product Photos in Bulk
+              {t('selectPhotosPrompt')}
             </Text>
             <Text className="text-slate-400 text-xs text-center max-w-xs leading-relaxed">
-              Import 1 to 50+ photos. Format canvas padding, aspect ratios, and sequential SKU names.
+              {t('selectPhotosDesc')}
             </Text>
           </TouchableOpacity>
         )}
@@ -173,7 +172,7 @@ export default function HomeScreen() {
         {/* Feature Highlights */}
         <View className="mt-4 space-y-3">
           <Text className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-            Automated E-Commerce Features
+            {t('archGuarantees')}
           </Text>
 
           <View className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl flex-row items-start mb-3">
@@ -181,10 +180,9 @@ export default function HomeScreen() {
               <Layers size={18} color="#60A5FA" />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">GPU Canvas Centering</Text>
+              <Text className="text-white font-bold text-sm">{t('canvasAspect')}</Text>
               <Text className="text-slate-400 text-xs mt-0.5 leading-relaxed">
-                Scales images inside destination aspect ratios without distortion, padding borders
-                with pure marketplace white.
+                {t('canvasAspectDesc')}
               </Text>
             </View>
           </View>
@@ -194,9 +192,9 @@ export default function HomeScreen() {
               <ShieldCheck size={18} color="#34D399" />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">EXIF Location Stripping</Text>
+              <Text className="text-white font-bold text-sm">{t('exifPrivacy')}</Text>
               <Text className="text-slate-400 text-xs mt-0.5 leading-relaxed">
-                Cleans all embedded GPS metadata and device tags to protect solo seller home privacy.
+                {t('exifPrivacyDesc')}
               </Text>
             </View>
           </View>

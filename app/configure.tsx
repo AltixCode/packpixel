@@ -9,12 +9,12 @@ import {
   Palette,
   Sliders,
   Lock,
-  Sparkles,
 } from 'lucide-react-native';
 import { useImageStore } from '../src/store/useImageStore';
 import { MARKETPLACE_PRESETS, MarketplacePreset } from '../src/presets/marketplace';
 import { SKUInputModal } from '../src/components/SKUInputModal';
 import { PaywallModal } from '../src/components/PaywallModal';
+import { t } from '../src/i18n';
 
 export default function ConfigureScreen() {
   const router = useRouter();
@@ -39,16 +39,16 @@ export default function ConfigureScreen() {
   }
 
   const bgColors = [
-    { label: 'Pure White (Amazon)', hex: '#FFFFFF' },
-    { label: 'Soft White (Etsy)', hex: '#F8FAFC' },
-    { label: 'Studio Gray', hex: '#F1F5F9' },
-    { label: 'Pitch Black', hex: '#000000' },
+    { label: t('colorWhite'), hex: '#FFFFFF' },
+    { label: t('colorSoftWhite'), hex: '#F8FAFC' },
+    { label: t('colorGray'), hex: '#F1F5F9' },
+    { label: t('colorBlack'), hex: '#000000' },
   ];
 
   const qualities = [
-    { label: 'Max (95%)', val: 0.95 },
-    { label: 'Optimal (85%)', val: 0.85 },
-    { label: 'Fast (75%)', val: 0.75 },
+    { label: t('qualityMax'), val: 0.95 },
+    { label: t('qualityOptimal'), val: 0.85 },
+    { label: t('qualityFast'), val: 0.75 },
   ];
 
   const handleSelectPreset = (p: MarketplacePreset) => {
@@ -71,7 +71,7 @@ export default function ConfigureScreen() {
         {/* Marketplace Presets */}
         <View className="mt-4 mb-5">
           <Text className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
-            Target Marketplace Preset
+            {t('targetPreset')}
           </Text>
           <View className="space-y-2.5">
             {MARKETPLACE_PRESETS.map((p) => {
@@ -104,7 +104,7 @@ export default function ConfigureScreen() {
                   {p.isProOnly && !isPro && (
                     <View className="bg-amber-500/20 px-2 py-1 rounded-lg flex-row items-center">
                       <Lock size={12} color="#F59E0B" />
-                      <Text className="text-amber-400 text-[10px] font-bold ml-1">PRO</Text>
+                      <Text className="text-amber-400 text-[10px] font-bold ml-1">{t('proBadge')}</Text>
                     </View>
                   )}
                 </TouchableOpacity>
@@ -117,7 +117,7 @@ export default function ConfigureScreen() {
         <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-4">
           <View className="flex-row items-center mb-3">
             <Palette size={16} color="#60A5FA" />
-            <Text className="text-white font-bold text-sm ml-2">Canvas Padding Color</Text>
+            <Text className="text-white font-bold text-sm ml-2">{t('canvasBgColor')}</Text>
           </View>
           <View className="flex-row flex-wrap gap-2">
             {bgColors.map((c) => {
@@ -155,14 +155,14 @@ export default function ConfigureScreen() {
               <Tag size={18} color="#60A5FA" />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">SKU Naming Prefix</Text>
+              <Text className="text-white font-bold text-sm">{t('skuRenaming')}</Text>
               <Text className="text-slate-400 text-xs mt-0.5 font-mono">
-                Current: {skuPrefix}_01.jpg, {skuPrefix}_02.jpg ...
+                {t('skuPrefixLabel', { prefix: skuPrefix })}
               </Text>
             </View>
           </View>
           <View className="bg-slate-800 px-3 py-1.5 rounded-lg">
-            <Text className="text-blue-400 text-xs font-semibold">Change</Text>
+            <Text className="text-blue-400 text-xs font-semibold">{t('changePrefix')}</Text>
           </View>
         </TouchableOpacity>
 
@@ -170,7 +170,7 @@ export default function ConfigureScreen() {
         <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-6">
           <View className="flex-row items-center mb-3">
             <Sliders size={16} color="#34D399" />
-            <Text className="text-white font-bold text-sm ml-2">JPEG Compression Quality</Text>
+            <Text className="text-white font-bold text-sm ml-2">{t('compressionRatio')}</Text>
           </View>
           <View className="flex-row justify-between">
             {qualities.map((q) => {
@@ -203,7 +203,7 @@ export default function ConfigureScreen() {
         >
           <ShoppingBag size={20} color="#FFFFFF" />
           <Text className="text-white font-bold text-base ml-2 mr-2">
-            Process {images.length} Images ({selectedPreset.platform})
+            {t('processBatch', { count: images.length })} ({selectedPreset.platform})
           </Text>
           <ArrowRight size={18} color="#FFFFFF" />
         </TouchableOpacity>
