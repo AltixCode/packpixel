@@ -8,7 +8,7 @@
 
 ### Completed Tasks
 * [x] Initialized Expo SDK 57+ repository with TypeScript template
-* [x] Configured bundle IDs (`com.hushtunnel.packpixel`) and permissions in `app.json`
+* [x] Configured bundle IDs (`com.altixcode.packpixel`) and permissions in `app.json`
 * [x] Configured NativeWind v4, Tailwind CSS, and Metro config
 * [x] Implemented universal RevenueCat module in `src/services/purchases.ts` ($9.99 Lifetime Pro)
 * [x] Implemented GPU canvas transformation math and EXIF stripping in `src/engine/skiaProcessor.ts`:

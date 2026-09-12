@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hushtunnel.packpixel",
+      "bundleIdentifier": "com.altixcode.packpixel",
       "buildNumber": "1",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "PackPixel needs photo library access to batch select product photos.",
@@ -23,7 +23,7 @@
       }
     },
     "android": {
-      "package": "com.hushtunnel.packpixel",
+      "package": "com.altixcode.packpixel",
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#050811",
