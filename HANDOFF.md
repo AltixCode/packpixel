@@ -44,7 +44,7 @@ None. App 2 (PackPixel) is certified and ready for submission.
 
 ## Verification Update — 2026-09-13
 
-* Pushed commit: `a0d2ab6` on `main`.
+* Latest workflow commit: `d01e154` on `main`; skipped Play uploads emit an explicit warning.
 * TypeScript: PASS — `rtk pnpm typecheck`
 * CI-style dependency install: PASS — `rtk npm ci --legacy-peer-deps`
 * Production exports: PASS — `rtk npm run export:ios`, `rtk npm run export:android`
