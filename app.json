@@ -19,7 +19,24 @@
       "buildNumber": "1",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "PackPixel needs photo library access to batch select product photos.",
-        "NSPhotoLibraryAddUsageDescription": "PackPixel exports formatted, resized marketplace images to your photo library."
+        "NSPhotoLibraryAddUsageDescription": "PackPixel exports formatted, resized marketplace images to your photo library.",
+        "CFBundleLocalizations": [
+          "en",
+          "es",
+          "fr",
+          "de",
+          "ru",
+          "zh",
+          "ja",
+          "pt",
+          "ko",
+          "it",
+          "tr",
+          "ar",
+          "fa",
+          "el"
+        ],
+        "CFBundleDevelopmentRegion": "en"
       }
     },
     "android": {

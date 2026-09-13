@@ -5,7 +5,6 @@ import * as Haptics from 'expo-haptics';
 import {
   ShoppingBag,
   Tag,
-  ArrowRight,
   Palette,
   Sliders,
   Lock,
@@ -15,6 +14,7 @@ import { MARKETPLACE_PRESETS, MarketplacePreset } from '../src/presets/marketpla
 import { SKUInputModal } from '../src/components/SKUInputModal';
 import { PaywallModal } from '../src/components/PaywallModal';
 import { t } from '../src/i18n';
+import { ForwardArrow } from '../src/components/DirectionalIcons';
 
 export default function ConfigureScreen() {
   const router = useRouter();
@@ -205,7 +205,7 @@ export default function ConfigureScreen() {
           <Text className="text-white font-bold text-base ml-2 mr-2">
             {t('processBatch', { count: images.length })} ({selectedPreset.platform})
           </Text>
-          <ArrowRight size={18} color="#FFFFFF" />
+          <ForwardArrow size={18} color="#FFFFFF" />
         </TouchableOpacity>
       </ScrollView>
 

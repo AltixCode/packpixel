@@ -7,7 +7,6 @@ import * as Haptics from 'expo-haptics';
 import {
   Sparkles,
   ShoppingBag,
-  ArrowRight,
   Layers,
   ShieldCheck,
   Plus,
@@ -17,6 +16,7 @@ import { useImageStore, ImageAsset } from '../src/store/useImageStore';
 import { ImagePreviewCard } from '../src/components/ImagePreviewCard';
 import { PaywallModal } from '../src/components/PaywallModal';
 import { t } from '../src/i18n';
+import { ForwardArrow } from '../src/components/DirectionalIcons';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -146,7 +146,7 @@ export default function HomeScreen() {
               <Text className="text-white font-bold text-base mr-2">
                 {t('configureBatch', { count: images.length })}
               </Text>
-              <ArrowRight size={18} color="#FFFFFF" />
+              <ForwardArrow size={18} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
         ) : (
