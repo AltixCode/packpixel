@@ -1,0 +1,62 @@
+appId: com.altixcode.packpixel
+name: Store screenshots
+---
+# Store screenshots have to show the product doing its job. An empty queue and
+# a stock hero sell nothing, and Apple rejects shots that do not match the
+# build, so these come from driving the real app over the real fixtures.
+- launchApp:
+    clearState: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: 01-hero
+
+- tapOn: ".*Select Product Photos.*"
+- extendedWaitUntil:
+    visible:
+      id: "photosView_content_scroll_view"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    point: "17%,23%"
+- waitForAnimationToEnd:
+    timeout: 2500
+- tapOn:
+    point: "50%,23%"
+- waitForAnimationToEnd:
+    timeout: 2500
+- tapOn:
+    point: "83%,23%"
+- waitForAnimationToEnd:
+    timeout: 2500
+- tapOn:
+    point: "91%,11%"
+- extendedWaitUntil:
+    visible: ".*Configure Batch.*"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: 02-queue
+
+- tapOn: ".*Configure Batch.*"
+- extendedWaitUntil:
+    visible: ".*(Amazon|eBay|Etsy).*"
+    timeout: 25000
+- tapOn: ".*Amazon.*"
+- waitForAnimationToEnd:
+    timeout: 2500
+- takeScreenshot: 03-presets
+
+- scrollUntilVisible:
+    element:
+      text: ".*Process \\d+ Photos.*"
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: 04-options
+- tapOn: ".*Process \\d+ Photos.*"
+- extendedWaitUntil:
+    visible: ".*Batch Export Complete.*"
+    timeout: 180000
+- waitForAnimationToEnd:
+    timeout: 2500
+- takeScreenshot: 05-complete
