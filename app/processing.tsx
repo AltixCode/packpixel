@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import * as Haptics from 'expo-haptics';
-import * as Sharing from 'expo-sharing';
+import React, { useEffect, useState, useRef } from "react";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { useRouter } from "expo-router";
+import * as Haptics from "expo-haptics";
+import * as Sharing from "expo-sharing";
 import {
   CheckCircle2,
   XCircle,
@@ -11,10 +11,14 @@ import {
   ArrowLeft,
   RotateCcw,
   Share2,
-} from 'lucide-react-native';
-import { useImageStore } from '../src/store/useImageStore';
-import { processBatchImages, saveResultsToLibrary } from '../src/engine/skiaProcessor';
-import { t } from '../src/i18n';
+} from "lucide-react-native";
+import { useImageStore } from "../src/store/useImageStore";
+import {
+  processBatchImages,
+  saveResultsToLibrary,
+} from "../src/engine/imageProcessor";
+import { useCanvasComposer } from "../src/engine/canvasComposer";
+import { t } from "../src/i18n";
 
 export default function ProcessingScreen() {
   const router = useRouter();
@@ -23,6 +27,7 @@ export default function ProcessingScreen() {
     selectedPreset,
     skuPrefix,
     compressionQuality,
+    bgColor,
     processingProgress,
     currentProcessIndex,
     results,
@@ -31,13 +36,18 @@ export default function ProcessingScreen() {
     reset,
   } = useImageStore();
 
+  const { ComposerPortal, compose } = useCanvasComposer();
+  const composeRef = useRef(compose);
+  composeRef.current = compose;
+
   const [isDone, setIsDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [saveWarning, setSaveWarning] = useState<string | null>(null);
   const isCanceledRef = useRef(false);
 
   useEffect(() => {
     if (images.length === 0) {
-      router.replace('/');
+      router.replace("/");
       return;
     }
 
@@ -54,23 +64,33 @@ export default function ProcessingScreen() {
           selectedPreset.height,
           skuPrefix,
           compressionQuality,
+          (request) => composeRef.current(request),
+          bgColor,
           (current, total) => {
             if (!isMounted || isCanceledRef.current) return;
             setProcessingProgress(current / total, current);
-          }
+          },
+          () => isCanceledRef.current,
         );
 
         if (!isMounted || isCanceledRef.current) return;
 
-        // Save batch to photo library
-        await saveResultsToLibrary(processed);
+        // A denied photo-library permission must not be reported as success:
+        // the files exist in the app sandbox but never reached the camera roll.
+        const saveResult = await saveResultsToLibrary(processed);
+        if (!isMounted || isCanceledRef.current) return;
+        if (!saveResult.success) {
+          setSaveWarning(saveResult.error ?? t("saveFailed"));
+        }
 
         setResults(processed);
         setIsDone(true);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      } catch (err: any) {
+      } catch (err) {
         if (!isMounted || isCanceledRef.current) return;
-        setErrorMessage(err?.message || t('batchError'));
+        setErrorMessage(
+          (err as { message?: string })?.message || t("batchError"),
+        );
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
     };
@@ -86,7 +106,7 @@ export default function ProcessingScreen() {
   const handleDone = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     reset();
-    router.replace('/');
+    router.replace("/");
   };
 
   const handleShareFirst = async () => {
@@ -101,6 +121,7 @@ export default function ProcessingScreen() {
 
   return (
     <View className="flex-1 bg-slate-950 px-6 justify-center items-center">
+      {ComposerPortal}
       {isDone ? (
         /* Completed State */
         <View className="w-full items-center">
@@ -108,23 +129,32 @@ export default function ProcessingScreen() {
             <CheckCircle2 size={56} color="#34D399" />
           </View>
           <Text className="text-2xl font-extrabold text-white text-center mb-2">
-            {t('allPhotosSaved')}
+            {saveWarning ? t("batchSavedLocally") : t("allPhotosSaved")}
           </Text>
           <Text className="text-slate-400 text-sm text-center max-w-xs leading-relaxed mb-6">
-            {t('allPhotosSavedDesc', {
-              count: images.length,
+            {t(saveWarning ? "batchSavedLocallyDesc" : "allPhotosSavedDesc", {
+              count: results.length || images.length,
               platform: selectedPreset.platform,
               width: selectedPreset.width,
               height: selectedPreset.height,
             })}
           </Text>
 
+          {saveWarning ? (
+            <Text
+              accessibilityRole="alert"
+              className="text-amber-300 text-xs text-center max-w-xs mb-5"
+            >
+              {saveWarning}
+            </Text>
+          ) : null}
+
           <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl w-full mb-6 flex-row items-center">
             <Sparkles size={20} color="#60A5FA" />
             <Text className="text-slate-300 text-xs ml-3 flex-1 font-mono">
-              {t('skuSequence', {
+              {t("skuSequence", {
                 prefix: skuPrefix,
-                last: String(images.length).padStart(2, '0'),
+                last: String(images.length).padStart(2, "0"),
               })}
             </Text>
           </View>
@@ -137,7 +167,9 @@ export default function ProcessingScreen() {
                 className="w-full bg-slate-800 py-3.5 rounded-2xl flex-row items-center justify-center mb-3"
               >
                 <Share2 size={18} color="#FFFFFF" />
-                <Text className="text-white font-semibold text-sm ml-2">{t('shareSample')}</Text>
+                <Text className="text-white font-semibold text-sm ml-2">
+                  {t("shareSample")}
+                </Text>
               </TouchableOpacity>
             )}
 
@@ -147,7 +179,9 @@ export default function ProcessingScreen() {
               className="w-full bg-blue-600 active:bg-blue-500 py-4 rounded-2xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
             >
               <RotateCcw size={18} color="#FFFFFF" />
-              <Text className="text-white font-bold text-base ml-2">{t('prepAnother')}</Text>
+              <Text className="text-white font-bold text-base ml-2">
+                {t("prepAnother")}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -158,16 +192,20 @@ export default function ProcessingScreen() {
             <XCircle size={56} color="#F43F5E" />
           </View>
           <Text className="text-2xl font-extrabold text-white text-center mb-2">
-            {t('batchError')}
+            {t("batchError")}
           </Text>
-          <Text className="text-rose-300 text-xs text-center max-w-xs mb-8">{errorMessage}</Text>
+          <Text className="text-rose-300 text-xs text-center max-w-xs mb-8">
+            {errorMessage}
+          </Text>
 
           <TouchableOpacity
             onPress={() => router.back()}
             className="bg-slate-800 py-3.5 px-6 rounded-xl flex-row items-center justify-center"
           >
             <ArrowLeft size={16} color="#FFFFFF" />
-            <Text className="text-white font-semibold text-sm ml-2">{t('backToSettings')}</Text>
+            <Text className="text-white font-semibold text-sm ml-2">
+              {t("backToSettings")}
+            </Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -178,10 +216,10 @@ export default function ProcessingScreen() {
           </View>
 
           <Text className="text-xl font-bold text-white text-center mb-1">
-            {t('formattingPhotos')}
+            {t("formattingPhotos")}
           </Text>
           <Text className="text-slate-400 text-xs text-center mb-8">
-            {t('conformingProgress', {
+            {t("conformingProgress", {
               current: currentProcessIndex || 1,
               total: images.length,
               platform: selectedPreset.platform,
@@ -197,8 +235,12 @@ export default function ProcessingScreen() {
           </View>
 
           <View className="w-full flex-row justify-between mb-8">
-            <Text className="text-slate-500 text-xs font-mono">{t('gpuEngine')}</Text>
-            <Text className="text-blue-400 text-xs font-bold font-mono">{progressPercent}%</Text>
+            <Text className="text-slate-500 text-xs font-mono">
+              {t("gpuEngine")}
+            </Text>
+            <Text className="text-blue-400 text-xs font-bold font-mono">
+              {progressPercent}%
+            </Text>
           </View>
 
           <ActivityIndicator size="small" color="#60A5FA" className="mb-8" />
@@ -210,7 +252,9 @@ export default function ProcessingScreen() {
             }}
             className="px-6 py-2.5 rounded-full bg-slate-900 border border-slate-800"
           >
-            <Text className="text-slate-400 text-xs font-semibold">{t('cancelBatch')}</Text>
+            <Text className="text-slate-400 text-xs font-semibold">
+              {t("cancelBatch")}
+            </Text>
           </TouchableOpacity>
         </View>
       )}
