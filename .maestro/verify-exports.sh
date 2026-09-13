@@ -8,14 +8,28 @@
 # distinguishes letterboxing from stretching.
 #
 # Usage: .maestro/verify-exports.sh <simulator-udid> [expected-canvas]
+#        .maestro/verify-exports.sh android [expected-canvas]
+#
+# The same geometry check runs against both platforms: the engines are separate
+# implementations, so "it works on iOS" says nothing about the Android one.
 set -euo pipefail
-UDID="${1:?usage: verify-exports.sh <udid> [WxH]}"
+TARGET="${1:?usage: verify-exports.sh <udid|android> [WxH]}"
 EXPECT="${2:-2000x2000}"
-DCIM="$HOME/Library/Developer/CoreSimulator/Devices/$UDID/data/Media/DCIM/100APPLE"
 BIN="$(mktemp -d)/content-box"
 swiftc -O "$(dirname "$0")/content-box.swift" -o "$BIN"
 
-mapfile -t SHOTS < <(ls -t "$DCIM"/*.JPG 2>/dev/null | head -3)
+if [ "$TARGET" = android ]; then
+  ADB="$HOME/Library/Android/sdk/platform-tools/adb"
+  PULLED="$(mktemp -d)"
+  # The app names its exports by SKU sequence, so the newest three are this run.
+  for f in $("$ADB" shell "ls -t /sdcard/DCIM/*.jpg" 2>/dev/null | tr -d '\r' | head -3); do
+    "$ADB" pull "$f" "$PULLED/" >/dev/null 2>&1 || true
+  done
+  mapfile -t SHOTS < <(ls "$PULLED"/*.jpg 2>/dev/null)
+else
+  DCIM="$HOME/Library/Developer/CoreSimulator/Devices/$TARGET/data/Media/DCIM/100APPLE"
+  mapfile -t SHOTS < <(ls -t "$DCIM"/*.JPG 2>/dev/null | head -3)
+fi
 [ "${#SHOTS[@]}" -eq 3 ] || { echo "FAIL: expected 3 exports, found ${#SHOTS[@]}"; exit 1; }
 
 echo "expecting canvas $EXPECT"

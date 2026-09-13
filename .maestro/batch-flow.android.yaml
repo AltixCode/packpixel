@@ -1,0 +1,57 @@
+appId: com.altixcode.packpixel
+name: Pad a batch to exact preset dimensions (Android)
+---
+# Same contract as the iOS flow: three deliberately awkward ratios must come out
+# letterboxed to the exact preset size. The picker differs enough from PHPicker
+# to need its own flow -- Android's photo picker is a separate system UI with a
+# "Recent" grid and an explicit add button.
+- launchApp:
+    clearState: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- assertVisible: "Batch Product Photo Prep"
+- takeScreenshot: artifacts/android-01-home
+
+- tapOn: ".*Select Product Photos.*"
+# Anchor on the picker's own chrome. The app's button text contains "Photos",
+# so a text wait on that would pass before the picker had presented.
+- extendedWaitUntil:
+    visible: "Albums"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 6000
+# The emulator's library holds exactly this app's three fixtures, so the first
+# row is the whole library.
+- tapOn:
+    point: "17%,41%"
+- tapOn:
+    point: "50%,41%"
+- tapOn:
+    point: "83%,41%"
+- takeScreenshot: artifacts/android-01b-selected
+# Anchor on the add button's own label. ".*Select.*" also matches the
+# "View selected" link beside it -- Maestro matches case-insensitively -- which
+# opens a preview screen instead of confirming.
+- tapOn: "Add \\(\\d+\\)"
+
+- extendedWaitUntil:
+    visible: ".*Configure Batch.*"
+    timeout: 30000
+- assertVisible: ".*Batch Queue \\(3\\).*"
+- takeScreenshot: artifacts/android-02-queued
+
+- tapOn: ".*Configure Batch.*"
+- extendedWaitUntil:
+    visible: ".*(Amazon|eBay|Etsy).*"
+    timeout: 25000
+- tapOn: ".*Amazon.*"
+- scrollUntilVisible:
+    element:
+      text: ".*Process \\d+ Photos.*"
+    direction: DOWN
+    timeout: 20000
+- tapOn: ".*Process \\d+ Photos.*"
+- extendedWaitUntil:
+    visible: ".*Batch Export Complete.*"
+    timeout: 180000
+- takeScreenshot: artifacts/android-03-done
