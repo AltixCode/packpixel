@@ -1,0 +1,76 @@
+appId: com.altixcode.packpixel
+name: Pad a batch to exact preset dimensions
+---
+# Fixtures are 1600x600, 600x1600 and 900x900 — deliberately awkward ratios, so
+# a correct letterboxed result is distinguishable from a plain resize. The build
+# this replaces resized only, then reported the preset's dimensions regardless.
+- launchApp:
+    clearState: false
+- waitForAnimationToEnd:
+    timeout: 6000
+- runFlow:
+    when:
+      visible: "Open in .*"
+    commands:
+      - tapOn: "Cancel"
+- assertVisible: "Batch Product Photo Prep"
+- takeScreenshot: artifacts/01-home
+
+- tapOn: ".*Select Product Photos.*"
+# Anchor on the picker's own scroll view. Matching on visible text is unsafe
+# here: ".*Photos.*" also matches the app's own "Select Product Photos" button,
+# so the wait passes instantly and every following tap fires at the home screen
+# while the picker is still presenting.
+- extendedWaitUntil:
+    visible:
+      id: "photosView_content_scroll_view"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 8000
+# The QA simulator holds exactly three photos, so row one of the picker grid is
+# the whole library and cell order does not matter — all three get tapped.
+# Cell bounds come from the PXGGridLayout-Info nodes: 133pt columns starting at
+# y=140 in a 402x874 viewport.
+#
+- tapOn:
+    point: "66,206"
+- waitForAnimationToEnd:
+    timeout: 3000
+- tapOn:
+    point: "200,206"
+- waitForAnimationToEnd:
+    timeout: 3000
+- tapOn:
+    point: "335,206"
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: artifacts/01b-picker-selected
+# The multi-select picker confirms with a checkmark button at the top right,
+# which carries no text label.
+- tapOn:
+    point: "364,100"
+
+- extendedWaitUntil:
+    visible: ".*Configure Batch.*"
+    timeout: 30000
+- assertVisible: ".*Batch Queue \\(3\\).*"
+- takeScreenshot: artifacts/02-queued
+
+- tapOn: ".*Configure Batch.*"
+- extendedWaitUntil:
+    visible: ".*(Amazon|eBay|Etsy).*"
+    timeout: 25000
+# Amazon's preset is 2000x2000 — a square target, so the wide and tall fixtures
+# must be letterboxed rather than stretched.
+- tapOn: ".*Amazon.*"
+- takeScreenshot: artifacts/03-preset
+- scrollUntilVisible:
+    element:
+      text: ".*Process \\d+ Photos.*"
+    direction: DOWN
+    timeout: 20000
+- tapOn: ".*Process \\d+ Photos.*"
+- extendedWaitUntil:
+    visible: ".*(Batch Export Complete|Not Saved to Photos).*"
+    timeout: 180000
+- takeScreenshot: artifacts/04-done
