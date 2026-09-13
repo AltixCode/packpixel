@@ -39,6 +39,7 @@ export const translations = {
     "saveFailed": "Photos could not be saved to your camera roll.",
     "batchSavedLocally": "Batch Ready — Not Saved to Photos",
     "batchSavedLocallyDesc": "{count} photos were conformed to {platform} ({width}×{height}) with EXIF stripped. Grant photo access to save them to your camera roll, or share them from here.",
+    "batchSavedLocallyDesc_one": "1 photo was conformed to {platform} ({width}×{height}) with EXIF stripped. Grant photo access to save it to your camera roll, or share it from here.",
     "lifetimeAccess": "Unlock Lifetime Access — {price}",
     "lifetimeAccessPlain": "Unlock Lifetime Access",
     "storeUnavailable": "The store is unreachable right now. Check your connection and try again.",
@@ -80,6 +81,7 @@ export const translations = {
     "exifStrip": "Strip EXIF & Location Tags",
     "exifStripDesc": "Permanently removes camera metadata for privacy and faster web load times",
     "processBatch": "Process {count} Photos",
+    "processBatch_one": "Process 1 Photo",
     "setPrefix": "Set Prefix",
     "changePrefix": "Change",
     "colorWhite": "Pure White (Amazon)",
@@ -95,6 +97,7 @@ export const translations = {
     "applySku": "Apply SKU",
     "allPhotosSaved": "Batch Export Complete!",
     "allPhotosSavedDesc": "{count} photos conformed to {platform} ({width}×{height}) with EXIF stripped and saved to your camera roll.",
+    "allPhotosSavedDesc_one": "1 photo conformed to {platform} ({width}×{height}) with EXIF stripped and saved to your camera roll.",
     "skuSequence": "SKU sequence: {prefix}_01.jpg through {prefix}_{last}.jpg",
     "shareSample": "Share Sample File",
     "prepAnother": "Prep Another Batch",
@@ -125,6 +128,7 @@ export const translations = {
     "saveFailed": "No se pudieron guardar las fotos en tu carrete.",
     "batchSavedLocally": "Lote Listo — No Guardado en Fotos",
     "batchSavedLocallyDesc": "{count} fotos se ajustaron a {platform} ({width}×{height}) con EXIF eliminado. Concede acceso a Fotos para guardarlas en tu carrete o compártelas desde aquí.",
+    "batchSavedLocallyDesc_one": "1 foto se ajustó a {platform} ({width}×{height}) con EXIF eliminado. Concede acceso a Fotos para guardarla en tu carrete, o compártela desde aquí.",
     "lifetimeAccess": "Desbloquear Acceso Vitalicio — {price}",
     "lifetimeAccessPlain": "Desbloquear Acceso Vitalicio",
     "storeUnavailable": "La tienda no está disponible ahora. Revisa tu conexión e inténtalo de nuevo.",
@@ -166,6 +170,7 @@ export const translations = {
     "exifStrip": "Eliminar Etiquetas EXIF y Ubicación",
     "exifStripDesc": "Elimina permanentemente metadatos para mayor privacidad y carga web rápida",
     "processBatch": "Procesar {count} Fotos",
+    "processBatch_one": "Procesar 1 foto",
     "setPrefix": "Establecer Prefijo",
     "changePrefix": "Cambiar",
     "colorWhite": "Blanco Puro (Amazon)",
@@ -181,6 +186,7 @@ export const translations = {
     "applySku": "Aplicar SKU",
     "allPhotosSaved": "¡Exportación por Lotes Completada!",
     "allPhotosSavedDesc": "{count} fotos adaptadas a {platform} ({width}×{height}) sin EXIF y guardadas en tu galería.",
+    "allPhotosSavedDesc_one": "1 foto ajustada a {platform} ({width}×{height}) con EXIF eliminado y guardada en tu carrete.",
     "skuSequence": "Secuencia SKU: {prefix}_01.jpg a {prefix}_{last}.jpg",
     "shareSample": "Compartir Archivo de Muestra",
     "prepAnother": "Preparar Otro Lote",
@@ -211,6 +217,7 @@ export const translations = {
     "saveFailed": "Les photos n'ont pas pu être enregistrées dans votre pellicule.",
     "batchSavedLocally": "Lot Prêt — Non Enregistré dans Photos",
     "batchSavedLocallyDesc": "{count} photos ont été converties au format {platform} ({width}×{height}) avec EXIF supprimé. Autorisez l'accès aux photos pour les enregistrer, ou partagez-les d'ici.",
+    "batchSavedLocallyDesc_one": "1 photo a été adaptée à {platform} ({width}×{height}), EXIF supprimé. Autorisez l'accès aux photos pour l'enregistrer, ou partagez-la d'ici.",
     "lifetimeAccess": "Débloquer l'Accès à Vie — {price}",
     "lifetimeAccessPlain": "Débloquer l'Accès à Vie",
     "storeUnavailable": "La boutique est injoignable pour le moment. Vérifiez votre connexion et réessayez.",
@@ -252,6 +259,7 @@ export const translations = {
     "exifStrip": "Supprimer Balises EXIF & Géolocalisation",
     "exifStripDesc": "Supprime définitivement les métadonnées pour la confidentialité et la vitesse web",
     "processBatch": "Traiter {count} Photos",
+    "processBatch_one": "Traiter 1 photo",
     "setPrefix": "Définir Préfixe",
     "changePrefix": "Modifier",
     "colorWhite": "Blanc Pur (Amazon)",
@@ -267,6 +275,7 @@ export const translations = {
     "applySku": "Appliquer SKU",
     "allPhotosSaved": "Exportation par Lot Terminée !",
     "allPhotosSavedDesc": "{count} photos adaptées à {platform} ({width}×{height}) sans EXIF et enregistrées dans la galerie.",
+    "allPhotosSavedDesc_one": "1 photo adaptée à {platform} ({width}×{height}), EXIF supprimé et enregistrée dans votre pellicule.",
     "skuSequence": "Séquence SKU : {prefix}_01.jpg à {prefix}_{last}.jpg",
     "shareSample": "Partager un Échantillon",
     "prepAnother": "Préparer un Autre Lot",
@@ -297,6 +306,7 @@ export const translations = {
     "saveFailed": "Die Fotos konnten nicht in deiner Aufnahmen-Mediathek gesichert werden.",
     "batchSavedLocally": "Stapel Fertig — Nicht in Fotos Gesichert",
     "batchSavedLocallyDesc": "{count} Fotos wurden auf {platform} ({width}×{height}) angepasst und EXIF entfernt. Erlaube den Fotozugriff, um sie zu sichern, oder teile sie von hier aus.",
+    "batchSavedLocallyDesc_one": "1 Foto wurde auf {platform} ({width}×{height}) angepasst, EXIF entfernt. Erlaube den Fotozugriff zum Speichern oder teile es von hier aus.",
     "lifetimeAccess": "Lebenslangen Zugriff Freischalten — {price}",
     "lifetimeAccessPlain": "Lebenslangen Zugriff Freischalten",
     "storeUnavailable": "Der Store ist derzeit nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
@@ -338,6 +348,7 @@ export const translations = {
     "exifStrip": "EXIF- & Standortdaten Entfernen",
     "exifStripDesc": "Entfernt Metadaten dauerhaft für maximale Privatsphäre und schnellere Ladezeiten",
     "processBatch": "{count} Fotos Verarbeiten",
+    "processBatch_one": "1 Foto verarbeiten",
     "setPrefix": "Präfix Festlegen",
     "changePrefix": "Ändern",
     "colorWhite": "Reinweiß (Amazon)",
@@ -353,6 +364,7 @@ export const translations = {
     "applySku": "SKU Anwenden",
     "allPhotosSaved": "Stapel-Export Abgeschlossen!",
     "allPhotosSavedDesc": "{count} Fotos an {platform} ({width}×{height}) angepasst, EXIF entfernt und in Mediathek gespeichert.",
+    "allPhotosSavedDesc_one": "1 Foto auf {platform} ({width}×{height}) angepasst, EXIF entfernt und in deinen Aufnahmen gespeichert.",
     "skuSequence": "SKU-Reihenfolge: {prefix}_01.jpg bis {prefix}_{last}.jpg",
     "shareSample": "Beispieldatei Teilen",
     "prepAnother": "Neuen Stapel Vorbereiten",
@@ -383,6 +395,7 @@ export const translations = {
     "saveFailed": "Не удалось сохранить фото в галерею.",
     "batchSavedLocally": "Пакет готов — не сохранён в «Фото»",
     "batchSavedLocallyDesc": "{count} фото приведены к формату {platform} ({width}×{height}), EXIF удалён. Разрешите доступ к «Фото», чтобы сохранить их, или поделитесь отсюда.",
+    "batchSavedLocallyDesc_one": "1 фото приведено к формату {platform} ({width}×{height}), EXIF удалён. Разрешите доступ к фото, чтобы сохранить, или поделитесь отсюда.",
     "lifetimeAccess": "Разблокировать Навсегда — {price}",
     "lifetimeAccessPlain": "Разблокировать Навсегда",
     "storeUnavailable": "Магазин сейчас недоступен. Проверьте подключение и повторите попытку.",
@@ -424,6 +437,7 @@ export const translations = {
     "exifStrip": "Удалить Теги EXIF и Геолокацию",
     "exifStripDesc": "Безвозвратно удаляет метаданные для конфиденциальности и ускорения загрузки сайта",
     "processBatch": "Обработать {count} Фото",
+    "processBatch_one": "Обработать 1 фото",
     "setPrefix": "Задать Префикс",
     "changePrefix": "Изменить",
     "colorWhite": "Белоснежный (Amazon)",
@@ -439,6 +453,7 @@ export const translations = {
     "applySku": "Применить SKU",
     "allPhotosSaved": "Пакетный Экспорт Завершен!",
     "allPhotosSavedDesc": "{count} фото адаптированы под {platform} ({width}×{height}) без EXIF и сохранены в галерею.",
+    "allPhotosSavedDesc_one": "1 фото приведено к формату {platform} ({width}×{height}), EXIF удалён, сохранено в галерее.",
     "skuSequence": "Серия SKU: от {prefix}_01.jpg до {prefix}_{last}.jpg",
     "shareSample": "Поделиться Примером",
     "prepAnother": "Подготовить Другой Пакет",
@@ -469,6 +484,7 @@ export const translations = {
     "saveFailed": "无法将照片保存到相册。",
     "batchSavedLocally": "批处理已完成 — 未保存到照片",
     "batchSavedLocallyDesc": "{count} 张照片已转换为 {platform}（{width}×{height}）并移除 EXIF。请授予照片访问权限以保存，或从此处分享。",
+    "batchSavedLocallyDesc_one": "1 张照片已适配 {platform}（{width}×{height}）并移除 EXIF。授予相册权限即可保存，或直接从这里分享。",
     "lifetimeAccess": "解锁永久买断版 — {price}",
     "lifetimeAccessPlain": "解锁永久买断版",
     "storeUnavailable": "目前无法连接到商店。请检查网络连接后重试。",
@@ -510,6 +526,7 @@ export const translations = {
     "exifStrip": "清除EXIF与地理位置元数据",
     "exifStripDesc": "永久移除相机拍摄元数据，保护隐私并大幅提高网页加载速度",
     "processBatch": "开始处理 {count} 张照片",
+    "processBatch_one": "处理 1 张照片",
     "setPrefix": "设置前缀",
     "changePrefix": "修改",
     "colorWhite": "纯白 (Amazon标准)",
@@ -525,6 +542,7 @@ export const translations = {
     "applySku": "应用SKU前缀",
     "allPhotosSaved": "批量导出完成！",
     "allPhotosSavedDesc": "{count} 张照片已完美适配 {platform} ({width}×{height})，清除EXIF并存入相册。",
+    "allPhotosSavedDesc_one": "1 张照片已适配 {platform}（{width}×{height}），已移除 EXIF 并保存到相册。",
     "skuSequence": "SKU序列：{prefix}_01.jpg 至 {prefix}_{last}.jpg",
     "shareSample": "分享单张样例",
     "prepAnother": "处理下一批照片",
@@ -555,6 +573,7 @@ export const translations = {
     "saveFailed": "写真をカメラロールに保存できませんでした。",
     "batchSavedLocally": "バッチ完了 — 写真に未保存",
     "batchSavedLocallyDesc": "{count} 枚の写真を {platform}（{width}×{height}）に変換し、EXIF を削除しました。写真へのアクセスを許可して保存するか、ここから共有してください。",
+    "batchSavedLocallyDesc_one": "1 枚を {platform}（{width}×{height}）に合わせ、EXIF を削除しました。カメラロールに保存するには写真へのアクセスを許可するか、ここから共有してください。",
     "lifetimeAccess": "買い切り版を解除 — {price}",
     "lifetimeAccessPlain": "買い切り版を解除",
     "storeUnavailable": "現在ストアに接続できません。通信状況を確認して再試行してください。",
@@ -596,6 +615,7 @@ export const translations = {
     "exifStrip": "EXIFと位置情報を除去",
     "exifStripDesc": "メタデータを完全除去しプライバシー保護とWeb表示の高速化を実現",
     "processBatch": "{count} 枚の写真を処理",
+    "processBatch_one": "1 枚を処理",
     "setPrefix": "プレフィックス設定",
     "changePrefix": "変更",
     "colorWhite": "ピュアホワイト (Amazon推奨)",
@@ -611,6 +631,7 @@ export const translations = {
     "applySku": "SKUを適用",
     "allPhotosSaved": "一括エクスポート完了！",
     "allPhotosSavedDesc": "{count} 枚の写真が {platform} ({width}×{height}) に最適化され、EXIF除去の上で保存されました。",
+    "allPhotosSavedDesc_one": "1 枚を {platform}（{width}×{height}）に合わせ、EXIF を削除してカメラロールに保存しました。",
     "skuSequence": "SKUシーケンス: {prefix}_01.jpg から {prefix}_{last}.jpg",
     "shareSample": "サンプルファイルを共有",
     "prepAnother": "別のバッチを作成",
@@ -641,6 +662,7 @@ export const translations = {
     "saveFailed": "Não foi possível salvar as fotos no seu rolo da câmera.",
     "batchSavedLocally": "Lote Pronto — Não Salvo em Fotos",
     "batchSavedLocallyDesc": "{count} fotos foram ajustadas para {platform} ({width}×{height}) com EXIF removido. Conceda acesso às Fotos para salvá-las ou compartilhe daqui.",
+    "batchSavedLocallyDesc_one": "1 foto foi ajustada a {platform} ({width}×{height}) com EXIF removido. Conceda acesso às Fotos para a guardar, ou partilhe-a daqui.",
     "lifetimeAccess": "Desbloquear Acesso Vitalício — {price}",
     "lifetimeAccessPlain": "Desbloquear Acesso Vitalício",
     "storeUnavailable": "A loja está indisponível no momento. Verifique sua conexão e tente novamente.",
@@ -682,6 +704,7 @@ export const translations = {
     "exifStrip": "Remover Etiquetas EXIF e Localização",
     "exifStripDesc": "Remove permanentemente os metadados para máxima privacidade e carregamento rápido",
     "processBatch": "Processar {count} Fotos",
+    "processBatch_one": "Processar 1 foto",
     "setPrefix": "Definir Prefixo",
     "changePrefix": "Alterar",
     "colorWhite": "Branco Puro (Amazon)",
@@ -697,6 +720,7 @@ export const translations = {
     "applySku": "Aplicar SKU",
     "allPhotosSaved": "Exportação em Lote Concluída!",
     "allPhotosSavedDesc": "{count} fotos adaptadas para {platform} ({width}×{height}) sem EXIF e salvas na galeria.",
+    "allPhotosSavedDesc_one": "1 foto ajustada a {platform} ({width}×{height}), EXIF removido e guardada no seu rolo da câmara.",
     "skuSequence": "Sequência SKU: {prefix}_01.jpg até {prefix}_{last}.jpg",
     "shareSample": "Compartilhar Arquivo de Exemplo",
     "prepAnother": "Preparar Outro Lote",
@@ -727,6 +751,7 @@ export const translations = {
     "saveFailed": "사진을 카메라 롤에 저장하지 못했습니다.",
     "batchSavedLocally": "일괄 처리 완료 — 사진에 저장되지 않음",
     "batchSavedLocallyDesc": "{count}장의 사진을 {platform}({width}×{height}) 규격으로 변환하고 EXIF를 제거했습니다. 사진 접근을 허용해 저장하거나 여기에서 공유하세요.",
+    "batchSavedLocallyDesc_one": "사진 1장을 {platform}({width}×{height})에 맞추고 EXIF를 제거했습니다. 카메라 롤에 저장하려면 사진 접근을 허용하거나 여기서 공유하세요.",
     "lifetimeAccess": "평생 이용권 잠금 해제 — {price}",
     "lifetimeAccessPlain": "평생 이용권 잠금 해제",
     "storeUnavailable": "지금은 스토어에 연결할 수 없습니다. 연결 상태를 확인한 후 다시 시도하세요.",
@@ -768,6 +793,7 @@ export const translations = {
     "exifStrip": "EXIF 및 위치 태그 영구 삭제",
     "exifStripDesc": "개인정보 보호 및 웹 로딩 속도 향상을 위해 카메라 메타데이터 완전 제거",
     "processBatch": "{count}장 사진 일괄 처리",
+    "processBatch_one": "사진 1장 처리",
     "setPrefix": "접두사 설정",
     "changePrefix": "변경",
     "colorWhite": "순백색 (Amazon)",
@@ -783,6 +809,7 @@ export const translations = {
     "applySku": "SKU 적용",
     "allPhotosSaved": "일괄 내보내기 완료!",
     "allPhotosSavedDesc": "{count}장의 사진이 {platform} ({width}×{height}) 규격에 맞춰 EXIF 삭제 후 저장되었습니다.",
+    "allPhotosSavedDesc_one": "사진 1장을 {platform}({width}×{height})에 맞추고 EXIF를 제거해 카메라 롤에 저장했습니다.",
     "skuSequence": "SKU 일련번호: {prefix}_01.jpg ~ {prefix}_{last}.jpg",
     "shareSample": "샘플 파일 공유",
     "prepAnother": "다른 사진 묶음 작업",
@@ -813,6 +840,7 @@ export const translations = {
     "saveFailed": "Non è stato possibile salvare le foto nel rullino.",
     "batchSavedLocally": "Lotto Pronto — Non Salvato in Foto",
     "batchSavedLocallyDesc": "{count} foto sono state adattate a {platform} ({width}×{height}) con EXIF rimosso. Concedi l'accesso a Foto per salvarle o condividile da qui.",
+    "batchSavedLocallyDesc_one": "1 foto è stata adattata a {platform} ({width}×{height}) con EXIF rimosso. Concedi l'accesso a Foto per salvarla, oppure condividila da qui.",
     "lifetimeAccess": "Sblocca Accesso a Vita — {price}",
     "lifetimeAccessPlain": "Sblocca Accesso a Vita",
     "storeUnavailable": "Lo store non è raggiungibile in questo momento. Controlla la connessione e riprova.",
@@ -854,6 +882,7 @@ export const translations = {
     "exifStrip": "Rimuovi Tag EXIF e Posizione",
     "exifStripDesc": "Rimuove permanentemente i metadati per massima privacy e caricamenti web veloci",
     "processBatch": "Elabora {count} Foto",
+    "processBatch_one": "Elabora 1 foto",
     "setPrefix": "Imposta Prefisso",
     "changePrefix": "Modifica",
     "colorWhite": "Bianco Puro (Amazon)",
@@ -869,6 +898,7 @@ export const translations = {
     "applySku": "Applica SKU",
     "allPhotosSaved": "Esportazione Batch Completata!",
     "allPhotosSavedDesc": "{count} foto adattate a {platform} ({width}×{height}) senza EXIF e salvate nella galleria.",
+    "allPhotosSavedDesc_one": "1 foto adattata a {platform} ({width}×{height}), EXIF rimosso e salvata nel rullino.",
     "skuSequence": "Sequenza SKU: da {prefix}_01.jpg a {prefix}_{last}.jpg",
     "shareSample": "Condividi File Esempio",
     "prepAnother": "Prepara Altro Batch",
@@ -899,6 +929,7 @@ export const translations = {
     "saveFailed": "Fotoğraflar kamera rulonuza kaydedilemedi.",
     "batchSavedLocally": "Toplu İşlem Hazır — Fotoğraflara Kaydedilmedi",
     "batchSavedLocallyDesc": "{count} fotoğraf {platform} ({width}×{height}) biçimine dönüştürüldü ve EXIF kaldırıldı. Kaydetmek için fotoğraf erişimi verin veya buradan paylaşın.",
+    "batchSavedLocallyDesc_one": "1 fotoğraf {platform} ({width}×{height}) biçimine uyarlandı ve EXIF kaldırıldı. Kamera rulonuza kaydetmek için fotoğraf erişimi verin ya da buradan paylaşın.",
     "lifetimeAccess": "Ömür Boyu Erişimi Aç — {price}",
     "lifetimeAccessPlain": "Ömür Boyu Erişimi Aç",
     "storeUnavailable": "Mağazaya şu anda ulaşılamıyor. Bağlantınızı kontrol edip tekrar deneyin.",
@@ -940,6 +971,7 @@ export const translations = {
     "exifStrip": "EXIF ve Konum Etiketlerini Sil",
     "exifStripDesc": "Gizlilik ve daha hızlı web yükleme süreleri için kamera meta verilerini kalıcı olarak kaldırır",
     "processBatch": "{count} Fotoğrafı İşle",
+    "processBatch_one": "1 fotoğrafı işle",
     "setPrefix": "Ön Ek Belirle",
     "changePrefix": "Değiştir",
     "colorWhite": "Saf Beyaz (Amazon)",
@@ -955,6 +987,7 @@ export const translations = {
     "applySku": "SKU Uygula",
     "allPhotosSaved": "Toplu Dışa Aktarma Tamamlandı!",
     "allPhotosSavedDesc": "{count} fotoğraf {platform} ({width}×{height}) standartlarına uyarlandı, EXIF silindi ve galerinize kaydedildi.",
+    "allPhotosSavedDesc_one": "1 fotoğraf {platform} ({width}×{height}) biçimine uyarlandı, EXIF kaldırıldı ve kamera rulonuza kaydedildi.",
     "skuSequence": "SKU sırası: {prefix}_01.jpg ile {prefix}_{last}.jpg arası",
     "shareSample": "Örnek Dosyayı Paylaş",
     "prepAnother": "Yeni Bir Grup Hazırla",
@@ -985,6 +1018,7 @@ export const translations = {
     "saveFailed": "تعذّر حفظ الصور في ألبوم الكاميرا.",
     "batchSavedLocally": "الدفعة جاهزة — لم تُحفظ في الصور",
     "batchSavedLocallyDesc": "تم تحويل {count} صورة إلى مقاس {platform} ({width}×{height}) مع إزالة بيانات EXIF. امنح الإذن بالوصول إلى الصور لحفظها، أو شاركها من هنا.",
+    "batchSavedLocallyDesc_one": "تمت مواءمة صورة واحدة مع {platform} ({width}×{height}) وإزالة EXIF. امنح الوصول إلى الصور لحفظها، أو شاركها من هنا.",
     "lifetimeAccess": "فتح الوصول مدى الحياة — {price}",
     "lifetimeAccessPlain": "فتح الوصول مدى الحياة",
     "storeUnavailable": "يتعذّر الوصول إلى المتجر حاليًا. تحقّق من اتصالك وحاول مرة أخرى.",
@@ -1026,6 +1060,7 @@ export const translations = {
     "exifStrip": "حذف بيانات EXIF والموقع الجغرافي",
     "exifStripDesc": "حذف نهائي للبيانات الوصفية للخصوصية ولتسريع تحميل صفحات الويب",
     "processBatch": "معالجة {count} صور",
+    "processBatch_one": "معالجة صورة واحدة",
     "setPrefix": "تعيين البادئة",
     "changePrefix": "تعديل",
     "colorWhite": "أبيض ناصع (معيار Amazon)",
@@ -1041,6 +1076,7 @@ export const translations = {
     "applySku": "تطبيق SKU",
     "allPhotosSaved": "اكتمل التصدير بنجاح!",
     "allPhotosSavedDesc": "تم تعديل {count} صورة وفق معايير {platform} ({width}×{height}) مع حذف EXIF وحفظها في المعرض.",
+    "allPhotosSavedDesc_one": "تمت مواءمة صورة واحدة مع {platform} ({width}×{height}) وإزالة EXIF وحفظها في ألبوم الكاميرا.",
     "skuSequence": "تسلسل SKU: من {prefix}_01.jpg إلى {prefix}_{last}.jpg",
     "shareSample": "مشاركة عينة",
     "prepAnother": "تجهيز دفعة جديدة",
@@ -1071,6 +1107,7 @@ export const translations = {
     "saveFailed": "ذخیرهٔ عکس‌ها در آلبوم دوربین ممکن نشد.",
     "batchSavedLocally": "دسته آماده است — در عکس‌ها ذخیره نشد",
     "batchSavedLocallyDesc": "{count} عکس به قالب {platform} ({width}×{height}) درآمد و اطلاعات EXIF حذف شد. برای ذخیره در آلبوم دوربین اجازهٔ دسترسی بدهید یا از همین‌جا به اشتراک بگذارید.",
+    "batchSavedLocallyDesc_one": "۱ عکس به قالب {platform} ({width}×{height}) درآمد و EXIF حذف شد. برای ذخیره در آلبوم دوربین اجازهٔ دسترسی بدهید یا از همین‌جا به اشتراک بگذارید.",
     "lifetimeAccess": "باز کردن دسترسی دائمی — {price}",
     "lifetimeAccessPlain": "باز کردن دسترسی دائمی",
     "storeUnavailable": "در حال حاضر دسترسی به فروشگاه ممکن نیست. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
@@ -1112,6 +1149,7 @@ export const translations = {
     "exifStrip": "حذف EXIF و برچسب مکان",
     "exifStripDesc": "اطلاعات دوربین را برای حفظ حریم خصوصی و بارگذاری سریع‌تر وب برای همیشه حذف می‌کند",
     "processBatch": "پردازش {count} عکس",
+    "processBatch_one": "پردازش ۱ عکس",
     "setPrefix": "تعیین پیشوند",
     "changePrefix": "تغییر",
     "colorWhite": "سفید خالص (آمازون)",
@@ -1127,6 +1165,7 @@ export const translations = {
     "applySku": "اعمال SKU",
     "allPhotosSaved": "خروجی دسته‌ای کامل شد!",
     "allPhotosSavedDesc": "{count} عکس به قالب {platform} ({width}×{height}) درآمد، EXIF حذف شد و در آلبوم دوربین ذخیره گردید.",
+    "allPhotosSavedDesc_one": "۱ عکس به قالب {platform} ({width}×{height}) درآمد، EXIF حذف شد و در آلبوم دوربین ذخیره گردید.",
     "skuSequence": "توالی SKU: از {prefix}_01.jpg تا {prefix}_{last}.jpg",
     "shareSample": "اشتراک‌گذاری نمونه",
     "prepAnother": "آماده‌سازی دستهٔ جدید",
@@ -1157,6 +1196,7 @@ export const translations = {
     "saveFailed": "Δεν ήταν δυνατή η αποθήκευση των φωτογραφιών στο άλμπουμ σας.",
     "batchSavedLocally": "Η παρτίδα είναι έτοιμη — δεν αποθηκεύτηκε στις Φωτογραφίες",
     "batchSavedLocallyDesc": "{count} φωτογραφίες προσαρμόστηκαν σε {platform} ({width}×{height}) με αφαίρεση EXIF. Δώστε πρόσβαση στις Φωτογραφίες για αποθήκευση ή μοιραστείτε τις από εδώ.",
+    "batchSavedLocallyDesc_one": "1 φωτογραφία προσαρμόστηκε σε {platform} ({width}×{height}) με αφαίρεση EXIF. Δώστε πρόσβαση στις Φωτογραφίες για αποθήκευση ή μοιραστείτε την από εδώ.",
     "lifetimeAccess": "Ξεκλείδωμα ισόβιας πρόσβασης — {price}",
     "lifetimeAccessPlain": "Ξεκλείδωμα ισόβιας πρόσβασης",
     "storeUnavailable": "Το κατάστημα δεν είναι προσβάσιμο αυτή τη στιγμή. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.",
@@ -1198,6 +1238,7 @@ export const translations = {
     "exifStrip": "Αφαίρεση EXIF και ετικετών τοποθεσίας",
     "exifStripDesc": "Αφαιρεί οριστικά τα μεταδεδομένα κάμερας για ιδιωτικότητα και ταχύτερη φόρτωση",
     "processBatch": "Επεξεργασία {count} φωτογραφιών",
+    "processBatch_one": "Επεξεργασία 1 φωτογραφίας",
     "setPrefix": "Ορισμός προθέματος",
     "changePrefix": "Αλλαγή",
     "colorWhite": "Καθαρό λευκό (Amazon)",
@@ -1213,6 +1254,7 @@ export const translations = {
     "applySku": "Εφαρμογή SKU",
     "allPhotosSaved": "Η μαζική εξαγωγή ολοκληρώθηκε!",
     "allPhotosSavedDesc": "{count} φωτογραφίες προσαρμόστηκαν σε {platform} ({width}×{height}), αφαιρέθηκε το EXIF και αποθηκεύτηκαν στο άλμπουμ σας.",
+    "allPhotosSavedDesc_one": "1 φωτογραφία προσαρμόστηκε σε {platform} ({width}×{height}), αφαιρέθηκε το EXIF και αποθηκεύτηκε στο άλμπουμ σας.",
     "skuSequence": "Ακολουθία SKU: {prefix}_01.jpg έως {prefix}_{last}.jpg",
     "shareSample": "Κοινή χρήση δείγματος",
     "prepAnother": "Νέα παρτίδα",
@@ -1269,9 +1311,34 @@ export function isRTL(): boolean {
   return currentLanguage === 'ar' || currentLanguage === 'fa';
 }
 
+/**
+ * CLDR plural category for `count` in the active language, e.g. "one" or
+ * "other" in English, which also has "few"/"many" in Russian and Arabic.
+ *
+ * Falls back to an English-style one/other split where Intl.PluralRules is
+ * unavailable, which is still better than always rendering the plural form.
+ */
+function pluralCategory(count: number): string {
+  try {
+    return new Intl.PluralRules(currentLanguage).select(count);
+  } catch {
+    return count === 1 ? 'one' : 'other';
+  }
+}
+
 export function t(key: TranslationKey, params?: Record<string, string | number>): string {
   const langDict = (translations as any)[currentLanguage] || translations.en;
-  let text: string = langDict[key] || translations.en[key] || (key as string);
+  // A key may carry plural variants as suffixed siblings ("exportClips_one").
+  // Only keys that actually define one are affected; everything else resolves
+  // to the base key exactly as before.
+  let resolved: string = key as string;
+  if (params && typeof params.count === 'number') {
+    const variant = `${key}_${pluralCategory(params.count)}`;
+    if (langDict[variant] || (translations.en as any)[variant]) resolved = variant;
+  }
+  let text: string =
+    langDict[resolved] || (translations.en as any)[resolved] ||
+    langDict[key] || translations.en[key] || (key as string);
   if (params) {
     Object.entries(params).forEach(([k, v]) => {
       text = text.split('{' + k + '}').join(String(v));
