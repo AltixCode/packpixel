@@ -73,7 +73,7 @@ export default function ConfigureScreen() {
           <Text className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
             {t('targetPreset')}
           </Text>
-          <View className="space-y-2.5">
+          <View className="flex-col gap-2.5">
             {MARKETPLACE_PRESETS.map((p) => {
               const isSelected = selectedPreset.id === p.id;
               return (

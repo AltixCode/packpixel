@@ -49,7 +49,7 @@ export const SKUInputModal: React.FC<SKUInputModalProps> = ({ visible, onClose }
             className="bg-slate-950 border border-slate-700 text-white font-mono px-4 py-3 rounded-xl text-base mb-5"
           />
 
-          <View className="flex-row space-x-3">
+          <View className="flex-row gap-3">
             <TouchableOpacity
               onPress={onClose}
               className="flex-1 bg-slate-800 py-3 rounded-xl items-center mr-2"

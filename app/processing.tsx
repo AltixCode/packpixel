@@ -160,7 +160,7 @@ export default function ProcessingScreen() {
           </View>
 
           {/* Action Buttons */}
-          <View className="w-full space-y-3">
+          <View className="w-full flex-col gap-3">
             {results.length > 0 && (
               <TouchableOpacity
                 onPress={handleShareFirst}

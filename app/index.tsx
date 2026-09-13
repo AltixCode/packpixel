@@ -108,7 +108,7 @@ export default function HomeScreen() {
                 )}
               </View>
 
-              <View className="flex-row items-center space-x-2">
+              <View className="flex-row items-center gap-2">
                 <TouchableOpacity
                   onPress={handlePickImages}
                   disabled={isPicking}
@@ -170,7 +170,7 @@ export default function HomeScreen() {
         )}
 
         {/* Feature Highlights */}
-        <View className="mt-4 space-y-3">
+        <View className="mt-4 flex-col gap-3">
           <Text className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
             {t('archGuarantees')}
           </Text>
