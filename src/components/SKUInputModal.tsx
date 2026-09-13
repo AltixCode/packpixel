@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { Tag, Check, X } from 'lucide-react-native';
 import { useImageStore } from '../store/useImageStore';
 import { t } from '../i18n';
+import { useTheme } from '../theme/useTheme';
 
 interface SKUInputModalProps {
   visible: boolean;
@@ -11,6 +12,7 @@ interface SKUInputModalProps {
 }
 
 export const SKUInputModal: React.FC<SKUInputModalProps> = ({ visible, onClose }) => {
+  const theme = useTheme();
   const { skuPrefix, setSkuPrefix } = useImageStore();
   const [tempSku, setTempSku] = useState(skuPrefix);
 
@@ -23,20 +25,20 @@ export const SKUInputModal: React.FC<SKUInputModalProps> = ({ visible, onClose }
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View className="flex-1 bg-black/75 items-center justify-center px-6">
-        <View className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-sm">
+        <View className="border rounded-3xl p-6 w-full max-w-sm" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
           <View className="flex-row items-center justify-between mb-4">
             <View className="flex-row items-center">
               <View className="bg-blue-500/20 p-2 rounded-xl mr-2">
-                <Tag size={18} color="#60A5FA" />
+                <Tag size={18} color={theme.primary} />
               </View>
-              <Text className="text-lg font-bold text-white">{t('skuTitle')}</Text>
+              <Text className="text-lg font-bold" style={{ color: theme.text }}>{t('skuTitle')}</Text>
             </View>
             <TouchableOpacity onPress={onClose} className="p-1">
-              <X size={18} color="#94A3B8" />
+              <X size={18} color={theme.textMuted} />
             </TouchableOpacity>
           </View>
 
-          <Text className="text-slate-400 text-xs mb-3">
+          <Text className="text-xs mb-3" style={{ color: theme.textSecondary }}>
             {t('skuSubtitle', { prefix: tempSku || 'SKU' })}
           </Text>
 
@@ -46,22 +48,22 @@ export const SKUInputModal: React.FC<SKUInputModalProps> = ({ visible, onClose }
             placeholder={t('skuPlaceholder')}
             placeholderTextColor="#64748B"
             autoCapitalize="characters"
-            className="bg-slate-950 border border-slate-700 text-white font-mono px-4 py-3 rounded-xl text-base mb-5"
+            className="border font-mono px-4 py-3 rounded-xl text-base mb-5" style={{ backgroundColor: theme.background, borderColor: theme.cardBorder, color: theme.text }}
           />
 
           <View className="flex-row gap-3">
             <TouchableOpacity
               onPress={onClose}
-              className="flex-1 bg-slate-800 py-3 rounded-xl items-center mr-2"
+              className="flex-1 py-3 rounded-xl items-center mr-2" style={{ backgroundColor: theme.controlSurface }}
             >
-              <Text className="text-slate-300 font-semibold text-sm">{t('cancel')}</Text>
+              <Text className="font-semibold text-sm" style={{ color: theme.textSecondary }}>{t('cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleSave}
               className="flex-1 bg-blue-600 py-3 rounded-xl items-center flex-row justify-center ml-2"
             >
-              <Check size={16} color="#FFFFFF" />
-              <Text className="text-white font-bold text-sm ml-1.5">{t('applySku')}</Text>
+              <Check size={16} color={theme.onPrimary} />
+              <Text className="font-bold text-sm ml-1.5" style={{ color: theme.onPrimary }}>{t('applySku')}</Text>
             </TouchableOpacity>
           </View>
         </View>

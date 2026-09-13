@@ -15,8 +15,10 @@ import { SKUInputModal } from '../src/components/SKUInputModal';
 import { PaywallModal } from '../src/components/PaywallModal';
 import { t } from '../src/i18n';
 import { ForwardArrow } from '../src/components/DirectionalIcons';
+import { useTheme } from '../src/theme/useTheme';
 
 export default function ConfigureScreen() {
+  const theme = useTheme();
   const router = useRouter();
   const {
     images,
@@ -66,11 +68,11 @@ export default function ConfigureScreen() {
   };
 
   return (
-    <View className="flex-1 bg-slate-950 px-5">
+    <View className="flex-1 px-5" style={{ backgroundColor: theme.background }}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
         {/* Marketplace Presets */}
         <View className="mt-4 mb-5">
-          <Text className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+          <Text className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: theme.textSecondary }}>
             {t('targetPreset')}
           </Text>
           <View className="flex-col gap-2.5">
@@ -81,30 +83,30 @@ export default function ConfigureScreen() {
                   key={p.id}
                   onPress={() => handleSelectPreset(p)}
                   activeOpacity={0.8}
-                  className={`p-4 rounded-2xl border mb-2.5 flex-row items-center justify-between ${
-                    isSelected
-                      ? 'bg-blue-950/60 border-blue-500'
-                      : 'bg-slate-900 border-slate-800'
-                  }`}
+                  className="p-4 rounded-2xl border mb-2.5 flex-row items-center justify-between"
+                  style={{
+                    backgroundColor: isSelected ? theme.primaryLight : theme.card,
+                    borderColor: isSelected ? theme.primary : theme.cardBorder,
+                  }}
                 >
                   <View className="flex-1 mr-3">
                     <View className="flex-row items-center">
-                      <Text className="text-white font-bold text-base mr-2">{p.name}</Text>
-                      <View className="bg-slate-800 px-2 py-0.5 rounded">
-                        <Text className="text-slate-300 text-xs font-mono">
+                      <Text className="font-bold text-base mr-2" style={{ color: theme.text }}>{p.name}</Text>
+                      <View className="px-2 py-0.5 rounded" style={{ backgroundColor: theme.controlSurface }}>
+                        <Text className="text-xs font-mono" style={{ color: theme.textSecondary }}>
                           {p.width}×{p.height} ({p.aspectRatio})
                         </Text>
                       </View>
                     </View>
-                    <Text className="text-slate-400 text-xs mt-1 leading-relaxed">
+                    <Text className="text-xs mt-1 leading-relaxed" style={{ color: theme.textSecondary }}>
                       {p.description}
                     </Text>
                   </View>
 
                   {p.isProOnly && !isPro && (
                     <View className="bg-amber-500/20 px-2 py-1 rounded-lg flex-row items-center">
-                      <Lock size={12} color="#F59E0B" />
-                      <Text className="text-amber-400 text-[10px] font-bold ml-1">{t('proBadge')}</Text>
+                      <Lock size={12} color={theme.warning} />
+                      <Text className="text-[10px] font-bold ml-1" style={{ color: theme.warning }}>{t('proBadge')}</Text>
                     </View>
                   )}
                 </TouchableOpacity>
@@ -114,10 +116,10 @@ export default function ConfigureScreen() {
         </View>
 
         {/* Padding Background Color */}
-        <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-4">
+        <View className="border p-4 rounded-2xl mb-4" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
           <View className="flex-row items-center mb-3">
-            <Palette size={16} color="#60A5FA" />
-            <Text className="text-white font-bold text-sm ml-2">{t('canvasBgColor')}</Text>
+            <Palette size={16} color={theme.primary} />
+            <Text className="font-bold text-sm ml-2" style={{ color: theme.text }}>{t('canvasBgColor')}</Text>
           </View>
           <View className="flex-row flex-wrap gap-2">
             {bgColors.map((c) => {
@@ -129,15 +131,16 @@ export default function ConfigureScreen() {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     setBgColor(c.hex);
                   }}
-                  className={`flex-row items-center px-3 py-2 rounded-xl border ${
-                    isSelected ? 'border-blue-500 bg-blue-950/40' : 'border-slate-800 bg-slate-950'
-                  }`}
+                  className="flex-row items-center px-3 py-2 rounded-xl border"
+                  style={{
+                    backgroundColor: isSelected ? theme.primaryLight : theme.background,
+                    borderColor: isSelected ? theme.primary : theme.cardBorder,
+                  }}
                 >
                   <View
-                    style={{ backgroundColor: c.hex }}
-                    className="w-4 h-4 rounded-full border border-slate-700 mr-2"
+                    className="w-4 h-4 rounded-full border mr-2" style={{ borderColor: theme.cardBorder, backgroundColor: c.hex }}
                   />
-                  <Text className="text-slate-300 text-xs font-medium">{c.label}</Text>
+                  <Text className="text-xs font-medium" style={{ color: theme.textSecondary }}>{c.label}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -148,29 +151,29 @@ export default function ConfigureScreen() {
         <TouchableOpacity
           onPress={() => setSkuModalVisible(true)}
           activeOpacity={0.8}
-          className="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-4 flex-row items-center justify-between"
+          className="border p-4 rounded-2xl mb-4 flex-row items-center justify-between" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}
         >
           <View className="flex-row items-center flex-1 mr-3">
-            <View className="bg-slate-800 p-2 rounded-xl mr-3">
-              <Tag size={18} color="#60A5FA" />
+            <View className="p-2 rounded-xl mr-3" style={{ backgroundColor: theme.controlSurface }}>
+              <Tag size={18} color={theme.primary} />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">{t('skuRenaming')}</Text>
-              <Text className="text-slate-400 text-xs mt-0.5 font-mono">
+              <Text className="font-bold text-sm" style={{ color: theme.text }}>{t('skuRenaming')}</Text>
+              <Text className="text-xs mt-0.5 font-mono" style={{ color: theme.textSecondary }}>
                 {t('skuPrefixLabel', { prefix: skuPrefix })}
               </Text>
             </View>
           </View>
-          <View className="bg-slate-800 px-3 py-1.5 rounded-lg">
-            <Text className="text-blue-400 text-xs font-semibold">{t('changePrefix')}</Text>
+          <View className="px-3 py-1.5 rounded-lg" style={{ backgroundColor: theme.controlSurface }}>
+            <Text className="text-xs font-semibold" style={{ color: theme.primary }}>{t('changePrefix')}</Text>
           </View>
         </TouchableOpacity>
 
         {/* Compression Quality */}
-        <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-6">
+        <View className="border p-4 rounded-2xl mb-6" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
           <View className="flex-row items-center mb-3">
-            <Sliders size={16} color="#34D399" />
-            <Text className="text-white font-bold text-sm ml-2">{t('compressionRatio')}</Text>
+            <Sliders size={16} color={theme.success} />
+            <Text className="font-bold text-sm ml-2" style={{ color: theme.text }}>{t('compressionRatio')}</Text>
           </View>
           <View className="flex-row justify-between">
             {qualities.map((q) => {
@@ -182,11 +185,16 @@ export default function ConfigureScreen() {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     setCompressionQuality(q.val);
                   }}
-                  className={`flex-1 mx-1 py-2.5 rounded-xl border items-center ${
-                    isSelected ? 'border-blue-500 bg-blue-950/40' : 'border-slate-800 bg-slate-950'
-                  }`}
+                  className="flex-1 mx-1 py-2.5 rounded-xl border items-center"
+                  style={{
+                    backgroundColor: isSelected ? theme.primaryLight : theme.background,
+                    borderColor: isSelected ? theme.primary : theme.cardBorder,
+                  }}
                 >
-                  <Text className={`text-xs font-bold ${isSelected ? 'text-blue-400' : 'text-slate-400'}`}>
+                  <Text
+                    className="text-xs font-bold"
+                    style={{ color: isSelected ? theme.primary : theme.textSecondary }}
+                  >
                     {q.label}
                   </Text>
                 </TouchableOpacity>
@@ -201,11 +209,11 @@ export default function ConfigureScreen() {
           activeOpacity={0.85}
           className="bg-blue-600 active:bg-blue-500 p-4 rounded-2xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
         >
-          <ShoppingBag size={20} color="#FFFFFF" />
-          <Text className="text-white font-bold text-base ml-2 mr-2">
+          <ShoppingBag size={20} color={theme.onPrimary} />
+          <Text className="font-bold text-base ml-2 mr-2" style={{ color: theme.onPrimary }}>
             {t('processBatch', { count: images.length })} ({selectedPreset.platform})
           </Text>
-          <ForwardArrow size={18} color="#FFFFFF" />
+          <ForwardArrow size={18} color={theme.onPrimary} />
         </TouchableOpacity>
       </ScrollView>
 

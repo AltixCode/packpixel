@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { X } from 'lucide-react-native';
 import { ImageAsset } from '../store/useImageStore';
+import { useTheme } from '../theme/useTheme';
 
 interface ImagePreviewCardProps {
   image: ImageAsset;
@@ -14,8 +15,9 @@ export const ImagePreviewCard: React.FC<ImagePreviewCardProps> = ({
   index,
   onRemove,
 }) => {
+  const theme = useTheme();
   return (
-    <View className="w-[31%] aspect-square bg-slate-900 border border-slate-800 rounded-xl overflow-hidden relative mb-2.5">
+    <View className="w-[31%] aspect-square border rounded-xl overflow-hidden relative mb-2.5" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
       <Image
         source={{ uri: image.uri }}
         className="w-full h-full"
@@ -23,7 +25,7 @@ export const ImagePreviewCard: React.FC<ImagePreviewCardProps> = ({
       />
       {/* Index Badge */}
       <View className="absolute bottom-1 left-1 bg-black/70 px-1.5 py-0.5 rounded">
-        <Text className="text-[10px] font-mono font-bold text-white">#{index + 1}</Text>
+        <Text className="text-[10px] font-mono font-bold" style={{ color: theme.text }}>#{index + 1}</Text>
       </View>
 
       {/* Remove Button */}
@@ -32,7 +34,7 @@ export const ImagePreviewCard: React.FC<ImagePreviewCardProps> = ({
         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         className="absolute top-1 right-1 bg-black/70 p-1 rounded-full"
       >
-        <X size={12} color="#EF4444" />
+        <X size={12} color={theme.danger} />
       </TouchableOpacity>
     </View>
   );

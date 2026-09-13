@@ -17,8 +17,10 @@ import { ImagePreviewCard } from '../src/components/ImagePreviewCard';
 import { PaywallModal } from '../src/components/PaywallModal';
 import { t } from '../src/i18n';
 import { ForwardArrow } from '../src/components/DirectionalIcons';
+import { useTheme } from '../src/theme/useTheme';
 
 export default function HomeScreen() {
+  const theme = useTheme();
   const router = useRouter();
   const { images, isPro, addImages, removeImage, clearImages } = useImageStore();
   const [paywallVisible, setPaywallVisible] = useState(false);
@@ -78,35 +80,35 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} className="flex-1 bg-slate-950 px-5">
+    <SafeAreaView edges={['bottom']} className="flex-1 px-5" style={{ backgroundColor: theme.background }}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
         {/* Header Hero */}
         <View className="mt-4 mb-5">
           <View className="inline-flex self-start bg-blue-500/10 border border-blue-500/30 px-3 py-1 rounded-full mb-3 flex-row items-center">
-            <Sparkles size={12} color="#60A5FA" />
-            <Text className="text-blue-400 text-xs font-semibold ml-1.5">
+            <Sparkles size={12} color={theme.primary} />
+            <Text className="text-xs font-semibold ml-1.5" style={{ color: theme.primary }}>
               {t('heroBadge')}
             </Text>
           </View>
-          <Text className="text-3xl font-extrabold text-white tracking-tight">
+          <Text className="text-3xl font-extrabold tracking-tight" style={{ color: theme.text }}>
             {t('heroTitle')}
           </Text>
-          <Text className="text-slate-400 text-sm mt-1.5 leading-relaxed">
+          <Text className="text-sm mt-1.5 leading-relaxed" style={{ color: theme.textSecondary }}>
             {t('heroSubtitle')}
           </Text>
         </View>
 
         {/* Selected Images Grid Card */}
         {images.length > 0 ? (
-          <View className="bg-slate-900 border border-slate-800 rounded-3xl p-5 mb-5">
-            <View className="flex-row items-center justify-between mb-4 pb-3 border-b border-slate-800">
+          <View className="border rounded-3xl p-5 mb-5" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
+            <View className="flex-row items-center justify-between mb-4 pb-3 border-b" style={{ borderColor: theme.cardBorder }}>
               <View className="flex-row items-center">
-                <Text className="text-white font-bold text-base mr-2">
+                <Text className="font-bold text-base mr-2" style={{ color: theme.text }}>
                   {t('batchQueue', { count: images.length })}
                 </Text>
                 {!isPro && (
-                  <View className="bg-slate-800 px-2 py-0.5 rounded-md">
-                    <Text className="text-slate-400 text-[10px] font-mono">
+                  <View className="px-2 py-0.5 rounded-md" style={{ backgroundColor: theme.controlSurface }}>
+                    <Text className="text-[10px] font-mono" style={{ color: theme.textSecondary }}>
                       {t('freeLimit', { count: images.length, limit: FREE_LIMIT })}
                     </Text>
                   </View>
@@ -117,15 +119,15 @@ export default function HomeScreen() {
                 <TouchableOpacity
                   onPress={handlePickImages}
                   disabled={isPicking}
-                  className="bg-slate-800 p-2 rounded-xl mr-2"
+                  className="p-2 rounded-xl mr-2" style={{ backgroundColor: theme.controlSurface }}
                 >
-                  <Plus size={16} color="#60A5FA" />
+                  <Plus size={16} color={theme.primary} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={clearImages}
-                  className="bg-slate-800 p-2 rounded-xl"
+                  className="p-2 rounded-xl" style={{ backgroundColor: theme.controlSurface }}
                 >
-                  <Trash2 size={16} color="#EF4444" />
+                  <Trash2 size={16} color={theme.danger} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -148,10 +150,10 @@ export default function HomeScreen() {
               activeOpacity={0.85}
               className="mt-4 bg-blue-600 active:bg-blue-500 py-3.5 px-4 rounded-xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
             >
-              <Text className="text-white font-bold text-base mr-2">
+              <Text className="font-bold text-base mr-2" style={{ color: theme.onPrimary }}>
                 {t('configureBatch', { count: images.length })}
               </Text>
-              <ForwardArrow size={18} color="#FFFFFF" />
+              <ForwardArrow size={18} color={theme.onPrimary} />
             </TouchableOpacity>
           </View>
         ) : (
@@ -160,15 +162,16 @@ export default function HomeScreen() {
             onPress={handlePickImages}
             disabled={isPicking}
             activeOpacity={0.85}
-            className="border-2 border-dashed border-slate-700 bg-slate-900/40 rounded-3xl p-8 items-center justify-center my-3"
+            className="border-2 border-dashed rounded-3xl p-8 items-center justify-center my-3"
+            style={{ borderColor: theme.cardBorder, backgroundColor: theme.surface }}
           >
             <View className="bg-blue-500/10 border border-blue-500/20 p-5 rounded-full mb-4">
-              <ShoppingBag size={36} color="#60A5FA" />
+              <ShoppingBag size={36} color={theme.primary} />
             </View>
-            <Text className="text-white font-bold text-lg text-center mb-1">
+            <Text className="font-bold text-lg text-center mb-1" style={{ color: theme.text }}>
               {t('selectPhotosPrompt')}
             </Text>
-            <Text className="text-slate-400 text-xs text-center max-w-xs leading-relaxed">
+            <Text className="text-xs text-center max-w-xs leading-relaxed" style={{ color: theme.textSecondary }}>
               {t('selectPhotosDesc')}
             </Text>
           </TouchableOpacity>
@@ -176,29 +179,29 @@ export default function HomeScreen() {
 
         {/* Feature Highlights */}
         <View className="mt-4 flex-col gap-3">
-          <Text className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <Text className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: theme.textMuted }}>
             {t('archGuarantees')}
           </Text>
 
-          <View className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl flex-row items-start mb-3">
+          <View className="border p-4 rounded-2xl flex-row items-start mb-3" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
             <View className="bg-blue-500/10 p-2 rounded-xl mr-3">
-              <Layers size={18} color="#60A5FA" />
+              <Layers size={18} color={theme.primary} />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">{t('canvasAspect')}</Text>
-              <Text className="text-slate-400 text-xs mt-0.5 leading-relaxed">
+              <Text className="font-bold text-sm" style={{ color: theme.text }}>{t('canvasAspect')}</Text>
+              <Text className="text-xs mt-0.5 leading-relaxed" style={{ color: theme.textSecondary }}>
                 {t('canvasAspectDesc')}
               </Text>
             </View>
           </View>
 
-          <View className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl flex-row items-start mb-3">
+          <View className="border p-4 rounded-2xl flex-row items-start mb-3" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
             <View className="bg-emerald-500/10 p-2 rounded-xl mr-3">
-              <ShieldCheck size={18} color="#34D399" />
+              <ShieldCheck size={18} color={theme.success} />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">{t('exifPrivacy')}</Text>
-              <Text className="text-slate-400 text-xs mt-0.5 leading-relaxed">
+              <Text className="font-bold text-sm" style={{ color: theme.text }}>{t('exifPrivacy')}</Text>
+              <Text className="text-xs mt-0.5 leading-relaxed" style={{ color: theme.textSecondary }}>
                 {t('exifPrivacyDesc')}
               </Text>
             </View>
