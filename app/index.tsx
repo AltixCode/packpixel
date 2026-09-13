@@ -25,6 +25,11 @@ export default function HomeScreen() {
   const [isPicking, setIsPicking] = useState(false);
 
   const FREE_LIMIT = 10;
+  // The picker already truncates a free user's selection to FREE_LIMIT, so this
+  // is not the primary enforcement -- it catches the queue and the entitlement
+  // disagreeing, which happens when a Pro user fills the queue and a later
+  // entitlement refresh comes back false (an expired receipt, or a failed
+  // RevenueCat call). Without it that queue would process past the free limit.
   const isOverFreeLimit = !isPro && images.length > FREE_LIMIT;
 
   const handlePickImages = async () => {
