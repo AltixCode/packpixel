@@ -70,7 +70,10 @@ name: Pad a batch to exact preset dimensions
     direction: DOWN
     timeout: 20000
 - tapOn: ".*Process \\d+ Photos.*"
+# Require the success state only. "Not Saved to Photos" is the fallback shown
+# when the library write is refused; accepting it here let a run where nothing
+# reached the camera roll pass as a successful export.
 - extendedWaitUntil:
-    visible: ".*(Batch Export Complete|Not Saved to Photos).*"
+    visible: ".*Batch Export Complete.*"
     timeout: 180000
 - takeScreenshot: artifacts/04-done
