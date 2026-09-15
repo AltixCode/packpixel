@@ -20,6 +20,9 @@ import {
 import { useCanvasComposer } from "../src/engine/canvasComposer";
 import { t } from "../src/i18n";
 import { useTheme } from '../src/theme/useTheme';
+import { useAdsStore } from '../src/store/adsStore';
+import { showInterstitial } from '../src/services/ads';
+import { shouldShowInterstitial } from '../src/services/adPolicy';
 
 export default function ProcessingScreen() {
   const theme = useTheme();
@@ -88,6 +91,7 @@ export default function ProcessingScreen() {
         setResults(processed);
         setIsDone(true);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        void useAdsStore.getState().recordCompletion();
       } catch (err) {
         if (!isMounted || isCanceledRef.current) return;
         setErrorMessage(
@@ -105,10 +109,29 @@ export default function ProcessingScreen() {
     };
   }, []);
 
+  const maybeShowInterstitial = async () => {
+    const { completions, lastInterstitialAt, markInterstitialShown } = useAdsStore.getState();
+    const decision = shouldShowInterstitial({
+      completions,
+      lastInterstitialAt,
+      now: Date.now(),
+      // Read at call time rather than captured: the user may have bought the upgrade from the
+      // paywall between opening this screen and finishing the work.
+      isPro: useImageStore.getState().isPro,
+    });
+    if (!decision) return;
+    // Only a shown-and-dismissed ad resets the clock. Counting an unfilled request would
+    // suppress the next several ads for nothing.
+    if (await showInterstitial()) await markInterstitialShown();
+  };
+
   const handleDone = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     reset();
     router.replace("/");
+    // After the navigation, not before it: an ad that appears while the user is still looking
+    // at their results reads as the app refusing to let them leave.
+    void maybeShowInterstitial();
   };
 
   const handleShareFirst = async () => {

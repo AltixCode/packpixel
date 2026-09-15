@@ -1,63 +1,242 @@
-# AGENT WORK TRACKING & HANDOFF STATE
+# PackPixel — handoff
 
-## Current Status: PENDING_EXTERNAL_VERIFICATION
+Written 2026-09-15. Everything below was checked against the live consoles and
+the repo on that date, not inferred.
 
-## Active Phase: Certified & Pipeline Built (0-to-100 Complete)
+**Where this app stands:** the code is done and verified on both platforms. It
+cannot be submitted yet, and the reasons are mostly outside this repo — AdMob is
+not configured for it, the legal URLs 404, and no build has ever been uploaded
+to either store.
 
-## Last Updated: 2026-09-12T16:13:30+03:00
+---
 
-### Completed Tasks
-* [x] Initialized Expo SDK 57+ repository with TypeScript template
-* [x] Configured bundle IDs (`com.altixcode.packpixel`) and permissions in `app.json`
-* [x] Configured NativeWind v4, Tailwind CSS, and Metro config
-* [x] Implemented universal RevenueCat module in `src/services/purchases.ts` ($9.99 Lifetime Pro)
-* [x] Implemented GPU canvas transformation math and EXIF stripping in `src/engine/skiaProcessor.ts`:
-  $$s = \min\left(\frac{W_{\text{target}}}{W_{\text{src}}}, \frac{H_{\text{target}}}{H_{\text{src}}}\right)$$
-  $$x_{\text{offset}} = \frac{W_{\text{target}} - (W_{\text{src}} \cdot s)}{2}, \quad y_{\text{offset}} = \frac{H_{\text{target}} - (H_{\text{src}} \cdot s)}{2}$$
-* [x] Configured marketplace presets in `src/presets/marketplace.ts` (Amazon 1:1, eBay 1600px, Etsy 4:3, Shopify, Vinted/Depop)
-* [x] Implemented batch state in `src/store/useImageStore.ts` with SKU sequencing
-* [x] Built UI components: `ImagePreviewCard.tsx`, `SKUInputModal.tsx`, `PaywallModal.tsx`
-* [x] Built full app navigation & screens:
-  - `app/_layout.tsx`: Root stack with dark theme and RevenueCat initialization
-  - `app/index.tsx`: Batch image selector, thumbnail grid, free limit gating
-  - `app/configure.tsx`: Marketplace preset picker, background padding color, SKU prefix
-  - `app/processing.tsx`: Real-time batch rendering progress, EXIF stripping, camera roll export
-  - `app/paywall.tsx`: Anti-subscription lifetime unlock screen ($9.99)
-* [x] Verified TypeScript typecheck with zero errors (`npx tsc --noEmit`)
-* [x] Verified iOS production bundling (`npx expo export --platform ios`)
-* [x] Verified Android production bundling (`npx expo export --platform android`)
-* [x] Configured automated release pipeline in `.github/workflows/deploy.yml`
+## Identifiers
 
-### In-Progress Tasks (Interrupt State)
-None. App 2 (PackPixel) is certified and ready for submission.
+| | |
+|---|---|
+| Bundle id / package | `com.altixcode.packpixel` |
+| App Store Connect app | `6811548924` (version 1.0, `PREPARE_FOR_SUBMISSION`) |
+| In-app purchase | `packpixel_pro_lifetime` — ASC id `6811577892`, state `MISSING_METADATA` |
+| RevenueCat project | `proj0a40dc24` |
+| RevenueCat apps | iOS `appa1f8ea45c6` · Android `app87c985ada6` |
+| RevenueCat entitlement | `pro` — ❌ **mismatch** — code reads `remove_ads` |
+| Play Console | record exists, no active release |
+| AdMob | nothing created |
 
-### Next Immediate Steps (Action Plan for Resuming Agent)
-1. Transition to App 3: SignPure (`~/Dev/signpure`).
-2. Implement offline PDF workspace with `pdf-lib`, Skia vector signature vault, biometric lock, and RevenueCat integration ($9.99).
+---
 
-### Simulator & Build Health
-* iOS Simulator Build: PASSING (Production bundle compiled cleanly)
-* Android Simulator Build: PASSING (Production bundle compiled cleanly)
-* RevenueCat Entitlement Check: VERIFIED (Entitlement `pro` mapped to Lifetime Package)
-* TypeScript Typecheck: PASSING (0 errors)
-* Blockers / Outstanding Issues: None
+## What is done
 
-## Verification Update — 2026-09-13
+- **Ads**: AdMob banner + interstitial through the shared portfolio integration
+  (`src/services/ads.ts`, `adPolicy.ts`, `adPacing.ts`, `adPacingFile.ts`,
+  `consentPolicy.ts`, `src/store/adsStore.ts`, `src/components/AdBanner.tsx`).
+  These files are byte-identical across the portfolio — change them in CapFlow
+  and re-port with `Dev/scripts/port-ads.mjs`, never in one app alone.
+- **Interstitial**: app/processing.tsx — on Done, after the batch is saved. Pacing lives in `adPolicy.ts`: the first completion
+  is always clean, then every 2nd, minimum 90s apart, and never for a user who
+  owns the upgrade. Counters persist across launches in `ad-pacing.json`.
+- **Consent**: UMP → ATT → SDK init, in that order, failing closed. Ads start
+  only once entitlement is known and only for users who have not paid, so a
+  paying user never sees a GDPR form or an ATT prompt. A dev-only
+  `[ads] consent {...}` line is logged; it is how the build harness proves the
+  app reached the ads service.
+- **Entitlement**: the code reads `remove_ads`. RevenueCat still holds
+  `pro` — see the first item under "What is left", because in this state a
+  purchase unlocks nothing.
+- **Release gate**: `npm run check:release` refuses a build whose identifiers
+  are absent, blank, or still a Google test unit. It runs in the store-build workflow before anything is built.
+- **Tests**: 45 passing, typecheck clean.
+- **Localization**: 14 locales (including `ar` and `fa`)
+- **CI**: `.github/workflows/ci.yml` runs typecheck, the test suite and both
+  bundle exports.
+- **Store build**: `.github/workflows/deploy.yml` builds, signs and uploads to
+  TestFlight and Play. It runs `npm run check:release` in both build jobs,
+  with the identifiers declared once at workflow level — they were not
+  passed to the build at all before, which would have shipped test ad units.
+- **Verified on device**: Android — built, installed, launched, consent
+  resolved, and the AdMob test banner rendered anchored at the bottom with the
+  layout intact. iOS — built, installed, launched, renders, consent flow
+  reached.
 
-* Latest workflow commit: `d01e154` on `main`; skipped Play uploads emit an explicit warning.
-* TypeScript: PASS — `rtk pnpm typecheck`
-* CI-style dependency install: PASS — `rtk npm ci --legacy-peer-deps`
-* Production exports: PASS — `rtk npm run export:ios`, `rtk npm run export:android`
-* Observed GitHub Actions runs after push: `34745145594 (queued); 34745173004 (pending)` for `AltixCode/packpixel`.
-* Workflow topology updated: iOS on `[self-hosted, macOS, ARM64]` and Android on `[self-hosted, linux, x64]` run independently in parallel; GitHub Release waits for both; hosted runner choices are explicit backup dispatch options.
-* Google Play upload now requires the `PLAY_STORE_SERVICE_ACCOUNT_JSON` repository secret. Store status: UNKNOWN.
-* RevenueCat: PASS for project `proj0a40dc24`; current iOS/Android apps, `pro` entitlement, and `$rc_lifetime` package are present with the $9.99 lifetime product. The custom native paywall is intentionally retained; RevenueCat verification's `offering has no attached paywall` is expected for this architecture.
-* Store provisioning: BLOCKED — App Store Connect exposes only HushTunnel and the CLI cannot create apps; Google Play API access returns `403 SERVICE_DISABLED` for the Reporting API. PackPixel store records and price schedules are therefore not verified.
-* Physical simulator/emulator interaction and zero-console-error QA: NOT RUN in this pass.
-* Next action: configure the repository secret, dispatch the workflow, and verify the resulting iOS/TestFlight, Android/Play, and GitHub Release statuses.
-## Verification Update — 2026-09-13 (Runner and Store Gating)
+---
 
-* Workflow update pushed in the latest main commit: Linux jobs install the Android SDK platform/build tools/NDK explicitly; iOS remains on the self-hosted macOS ARM64 runner.
-* iOS and Android jobs remain independent so they can run simultaneously on separate self-hosted machines. Repository concurrency still limits duplicate release workflows to one active run per repository.
-* Store uploads are disabled on ordinary pushes until repository variable `ENABLE_STORE_UPLOADS=true` is configured. Manual dispatch can enable submission explicitly. This keeps builds green while App Store Connect and Google Play records are being created by the owner.
-* The `PLAY_STORE_SERVICE_ACCOUNT_JSON` secret is the only supported CI credential input for Play publishing; no local credential path is committed.
+## What is left that an agent can do
+
+1. **Fix the entitlement mismatch — this one ships broken.**
+   RevenueCat holds `pro`; the code reads `remove_ads`. A purchase would
+   succeed, charge the customer, and unlock nothing. Either create the
+   entitlement and attach the existing product:
+
+   ```bash
+   rc entitlements create --lookup-key remove_ads \
+     --display-name "Pro — Ad-Free & Unlimited" --project-id proj0a40dc24 --json --yes
+   rc entitlements attach <entitlementId> <productId> --project-id proj0a40dc24 --json --yes
+   ```
+
+   …or change `ENTITLEMENT_ID` back to `pro` in `src/services/purchases.ts`.
+   The first is the portfolio decision; do not leave them disagreeing.
+
+2. **Upload the screenshots to App Store Connect.** 10 exist on disk under
+   `store/screenshots/` at both required sizes; zero are uploaded.
+
+3. **Nothing to write for the listing** — 5 locales already carry a
+   description and keywords in App Store Connect. The copy lives in
+   `Dev/scripts/store-metadata.json`; it now discloses that ads are served by
+   Google AdMob, which the previous text did not.
+
+4. **Upload the IAP review screenshot.** The in-app purchase
+   (`packpixel_pro_lifetime`) is localized and priced at $3.99, and sits at
+   `MISSING_METADATA` for want of one screenshot:
+
+   ```bash
+   asccli iap-review-screenshot upload --iap-id 6811577892 --file <path-to-png>
+   ```
+
+5. **Rename the purchase.** Its App Store display name and description still
+   describe only half of what it does. One purchase removes the ads *and*
+   unlocks the paid features, so both halves belong in the copy — something
+   like "Pro — Ad-Free & Unlimited" (name ≤ 30 chars, description ≤ 45):
+
+   ```bash
+   asccli iap-localizations update --localization-id <id> \
+     --name "Pro — Ad-Free & Unlimited" --description "<= 45 chars"
+   ```
+
+6. **RTL layout pass.** `ar` and `fa` copy is present and
+   `plugins/withAndroidRtl.js` is wired, but the layouts have not been walked in
+   RTL. Deliberately left until last.
+
+---
+
+## What only you can do
+
+1. **AdMob — nothing exists for this app.** There is no write API at all; it is
+   console-only. Create the app on both platforms, then banner and interstitial ad units,
+   and note the ids. Answer **"No, not listed on a supported app store"** while
+   the app is unpublished — linking later does not change the ids.
+
+   Then publish a **GDPR message and a US-states message** under Privacy &
+   messaging. The SDK can only present a message that exists, and this app fails
+   closed on missing consent — so without them it shows **no ads at all** in the
+   EEA. Expect "Requires review — limited ad serving" for a couple of days after
+   the app goes live; that is not an integration bug.
+
+2. **RevenueCat — Apple credentials.** `appa1f8ea45c6` (the App Store app in project
+   `proj0a40dc24`) has no Apple credentials, so App Store purchases cannot be
+   validated. This needs an interactive Apple ID sign-in with 2FA:
+
+   ```bash
+   rc setup apple appa1f8ea45c6
+   ```
+
+   An App Store Connect *API* key can be set non-interactively; the separate
+   **In-App Purchase key** cannot, which is why this one is yours.
+
+3. **GitHub secrets.** The signing secrets are all present
+   (`APP_KEYSTORE_*`, `APP_STORE_CONNECT_API_KEY_*`,
+   `PLAY_STORE_SERVICE_ACCOUNT_JSON`). These are **not**, and CI now fails
+   without them — deliberately, because a build missing one earns nothing while
+   looking perfectly healthy:
+
+   ```
+   EXPO_PUBLIC_ADMOB_IOS_APP_ID
+   EXPO_PUBLIC_ADMOB_ANDROID_APP_ID
+   EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL
+   EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL
+   EXPO_PUBLIC_ADMOB_IOS_BANNER
+   EXPO_PUBLIC_ADMOB_ANDROID_BANNER
+   EXPO_PUBLIC_REVENUECAT_IOS_KEY
+   EXPO_PUBLIC_REVENUECAT_ANDROID_KEY
+   ```
+
+   Set each with `gh secret set <KEY> --repo AltixCode/packpixel`. The RevenueCat
+   public SDK keys are fetchable — `rc api GET "/projects/proj0a40dc24/apps/appa1f8ea45c6/public_api_keys"`
+   — the AdMob ones come from step 1.
+
+4. **The legal URLs are wrong and they 404.** `src/config/legal.ts` points at
+   `https://www.hushtunnel.com/legal/packpixel-privacy` — **hushtunnel.com**, a leftover from the HushTunnel
+   template, not an AltixCode domain at all.
+
+   Nothing is served there: altixcode.com only has `/legal/privacy`,
+   `/legal/terms` and `/legal/cookies`. Both stores require a working privacy
+   policy, the App Store record needs the same URL, and the policy text must now
+   disclose that ads are served by Google AdMob and that ATT/UMP consent governs
+   personalisation. Either publish per-app pages under altixcode.com or point
+   `src/config/legal.ts` at the generic ones — either way the ads paragraph has to be
+   written.
+
+5. **Play Console — the app record exists.** `com.altixcode.packpixel` is recognised,
+   so a bundle has been uploaded at least once. No track has an active release,
+   and the data safety form still needs completing (it must now declare the ad
+   SDK's data collection).
+
+6. **App Store review contact.** No contact email or phone is set in App Store
+   review information; the readiness check fails on it.
+
+7. **The self-hosted macOS runner has been stopped since 2026-09-13** (it filled
+   the disk). Every workflow in this repo targets it and queues indefinitely
+   until it is back.
+
+8. **No EAS project is linked.** `eas env:list` and any EAS build refuse with
+   "EAS project not configured", and a robot token cannot configure it
+   interactively — it needs `eas init --id <project-id> --non-interactive`, with
+   `owner` and the project id then set by hand in the app config.
+
+9. **Play Developer Reporting API is disabled** for project 1013025269741, so
+   `gplay apps list` returns 403. The service account cannot enable it
+   (`serviceusage.services.enable` is missing); it has to be enabled in the
+   Cloud Console.
+
+---
+
+## Fixed recently — context for anything that looks odd
+
+- **Privacy copy that ads made untrue.** Screens promising "no tracking" were
+  corrected in every locale: the app's own content still never leaves the phone,
+  but the ads do reach the internet and the copy now says so.
+- The store description's PRIVACY paragraph now discloses that ads are served by
+  Google AdMob and that the one-time purchase removes them.
+
+---
+
+## Traps already paid for — do not rediscover these
+
+- **`react-native-google-mobile-ads` must stay pinned to exactly 16.3.4.** 16.4+
+  pulls play-services-ads 25.3+, whose Kotlin 2.3.0 metadata SDK 57's Kotlin
+  2.1.0 refuses to read. Forcing Kotlin up instead breaks `react-native-purchases`
+  and `safe-area-context`.
+- **iOS 26+ needs UIScene adoption** (`plugins/withIOSSceneLifecycle`). Without
+  it the app installs, launches, and quits straight back to the home screen,
+  with nothing on screen to explain why.
+- **`JAVA_HOME` must be** `/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home`
+  for any Android build. Gradle otherwise falls back to JDK 25 and CMake dies.
+- **A missing identifier fails nothing.** The app falls back to Google's test ad
+  units, works perfectly, and earns nothing. That is what `check:release` exists
+  to stop.
+- **`expo run:android` can fail in a second and leave the previous APK
+  installed** — the app then launches, renders, and proves nothing. Check the
+  build's own exit code before believing a screenshot.
+- **Simulator.app is missing from this Xcode install**, so the ATT prompt cannot
+  be dismissed on iOS. iOS verification ends at "builds, installs, launches,
+  renders"; drive interaction on Android.
+
+---
+
+## Commands
+
+```bash
+npm run typecheck && npm test          # both clean as of 2026-09-15
+npm run check:release                  # fails until the identifiers exist — correct
+../scripts/verify-app.sh packpixel com.altixcode.packpixel   # full build + device verification, both platforms
+```
+
+The portfolio-wide notes live in `Dev/AGENTS.md`, and the store/console playbook
+in `Dev/gridlock-pop/docs/mobile-playbook.md`. The shared ad integration is
+ported by `Dev/scripts/port-ads.mjs` from CapFlow, which is the reference.
+
+---
+
+## One caution
+
+Everything in this repo is **uncommitted**. Read `git status` before assuming
+the working tree matches `main`.
