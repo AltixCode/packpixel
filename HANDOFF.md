@@ -19,7 +19,7 @@ to either store.
 | In-app purchase | `packpixel_pro_lifetime` — ASC id `6811577892`, state `MISSING_METADATA` |
 | RevenueCat project | `proj0a40dc24` |
 | RevenueCat apps | iOS `appa1f8ea45c6` · Android `app87c985ada6` |
-| RevenueCat entitlement | `pro` — ❌ **mismatch** — code reads `remove_ads` |
+| RevenueCat entitlement | `pro` — ✅ matches; code reads `pro` (fixed since this file was last accurate) |
 | Play Console | record exists, no active release |
 | AdMob | nothing created |
 
@@ -40,9 +40,9 @@ to either store.
   paying user never sees a GDPR form or an ATT prompt. A dev-only
   `[ads] consent {...}` line is logged; it is how the build harness proves the
   app reached the ads service.
-- **Entitlement**: the code reads `remove_ads`. RevenueCat still holds
-  `pro` — see the first item under "What is left", because in this state a
-  purchase unlocks nothing.
+- **Entitlement**: the code reads `pro` (`src/services/purchases.ts` ->
+  `ENTITLEMENT_ID = "pro"`), matching RevenueCat's `pro` entitlement. The
+  mismatch that used to be here is fixed.
 - **Release gate**: `npm run check:release` refuses a build whose identifiers
   are absent, blank, or still a Google test unit. It runs in the store-build workflow before anything is built.
 - **Tests**: 45 passing, typecheck clean.
@@ -62,19 +62,9 @@ to either store.
 
 ## What is left that an agent can do
 
-1. **Fix the entitlement mismatch — this one ships broken.**
-   RevenueCat holds `pro`; the code reads `remove_ads`. A purchase would
-   succeed, charge the customer, and unlock nothing. Either create the
-   entitlement and attach the existing product:
-
-   ```bash
-   rc entitlements create --lookup-key remove_ads \
-     --display-name "Pro — Ad-Free & Unlimited" --project-id proj0a40dc24 --json --yes
-   rc entitlements attach <entitlementId> <productId> --project-id proj0a40dc24 --json --yes
-   ```
-
-   …or change `ENTITLEMENT_ID` back to `pro` in `src/services/purchases.ts`.
-   The first is the portfolio decision; do not leave them disagreeing.
+1. ~~Fix the entitlement mismatch~~ — **done.** `ENTITLEMENT_ID` in
+   `src/services/purchases.ts` already reads `pro`, matching RevenueCat.
+   Verified 2026-09-18; no action needed here.
 
 2. **Upload the screenshots to App Store Connect.** 10 exist on disk under
    `store/screenshots/` at both required sizes; zero are uploaded.
